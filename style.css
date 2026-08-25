@@ -1,0 +1,1000 @@
+:root {
+  --bg-void: #05080c;
+  --panel-a: #1c2d42;
+  --panel-b: #162030;
+  --panel-c: #111c2a;
+  --border: #2a4060;
+  --cyan: rgba(41, 182, 246, 1);
+  --cyan-dim: rgba(41, 182, 246, 0.45);
+  --fg: rgba(220, 235, 248, 0.92);
+  --fg-dim: rgba(160, 200, 230, 0.62);
+  --fg-faint: rgba(140, 180, 210, 0.45);
+  --font-display: 'Orbitron', 'Montserrat', sans-serif;
+  --font-body: 'Rajdhani', 'Montserrat', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 17px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--fg);
+  background:
+    linear-gradient(180deg, rgba(5,8,12,0.55) 0%, rgba(5,8,12,0.86) 100%),
+    #05080c url("images/cover_dark.webp") center / cover fixed no-repeat;
+  overflow-x: hidden;
+}
+
+/* На широких экранах — вид на космос через иллюминатор корабля.
+   На мобильных рамка съедала бы весь экран, поэтому там остаётся звёздный фон. */
+@media (min-width: 861px) {
+  body {
+    background:
+      linear-gradient(180deg, rgba(5,8,12,0.35) 0%, rgba(5,8,12,0.55) 100%),
+      #05080c url("images/spaceship_panel.webp") center / cover fixed no-repeat;
+  }
+}
+
+a { color: inherit; text-decoration: none; }
+
+img { max-width: 100%; display: block; }
+
+/* Бронзовые SVG-рамки кнопок/подписей — только десктоп (см. @media min-width:861px) */
+.plaque-frame-svg { display: none; }
+
+/* ── Шапка ─────────────────────────────────────────────────────── */
+:root {
+  --header-h: 82px;
+  --footer-h: 74px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 5vw;
+  background: rgba(5, 8, 12, 0.72);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(41, 182, 246, 0.14);
+}
+
+.brand {
+  position: relative;
+  width: clamp(64px, 11vw, 200px);
+  height: var(--header-h);
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.brand-logo {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+  transition: filter 0.25s;
+}
+
+.brand:hover .brand-logo,
+.brand:focus-visible .brand-logo {
+  filter:
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 16px rgba(41, 182, 246, 0.6))
+    brightness(1.1);
+}
+
+@keyframes logoSpin {
+  to { transform: rotate(1080deg); }
+}
+
+.brand-logo.is-spinning {
+  animation: logoSpin 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.slide-dots { display: none; }
+
+/* Приборная панель включается только там, где живёт слайд-шоу (см. блок @media min-width:861px) */
+
+/* ── Герой ─────────────────────────────────────────────────────── */
+.hero {
+  min-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 90px 6vw 60px;
+  position: relative;
+}
+
+.hero-inner {
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.1rem, 5.2vw, 3.6rem);
+  line-height: 1.28;
+  letter-spacing: 0.03em;
+  margin: 0;
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba(41, 182, 246, 0.55),
+    0 0 46px rgba(41, 182, 246, 0.25);
+}
+
+.hero-title-sep { color: var(--cyan); }
+
+.hero-title-sub {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.62em;
+  color: var(--cyan);
+  letter-spacing: 0.14em;
+}
+
+.hero-lead {
+  max-width: 640px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  margin: 0;
+}
+
+.cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 44px;
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid rgba(100, 160, 200, 0.5);
+  color: rgba(160, 210, 240, 0.95);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cta-btn:hover {
+  background: rgba(41, 100, 160, 0.2);
+  border-color: rgba(100, 180, 230, 0.85);
+  color: #fff;
+  box-shadow: 0 0 30px rgba(41, 182, 246, 0.2), inset 0 0 14px rgba(41, 182, 246, 0.08);
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  font-size: 1.6rem;
+  color: var(--cyan-dim);
+  cursor: pointer;
+  animation: bob 2.2s ease-in-out infinite;
+  transition: color 0.2s;
+}
+
+.hero-scroll-hint:hover { color: var(--cyan); }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+
+/* ── Секции (общее) ───────────────────────────────────────────── */
+.section {
+  max-width: 1880px;
+  margin: 0 auto;
+  padding: 90px 3.5vw;
+  scroll-margin-top: var(--header-h);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.7vw, 1.9rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--fg);
+  margin: 0 0 56px;
+  position: relative;
+  padding-bottom: 22px;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+
+/* ── Панель-рамка (SVG-техника из Пищевого синтезатора) ──────────── */
+.panel {
+  position: relative;
+}
+
+.panel-frame-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.panel-frame-stroke {
+  stroke: #4a5c6d;
+  transition: stroke 0.3s;
+}
+
+.panel-frame-glow-stroke {
+  stroke: #29b6f6;
+  transition: stroke 0.3s;
+}
+
+.panel-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Кто по ту сторону экрана ──────────────────────────────────── */
+.author-block {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 72px;
+}
+
+.author-photo-frame {
+  flex: 0 0 auto;
+  width: 280px;
+  padding: 10px;
+  background: linear-gradient(160deg, var(--panel-a) 0%, var(--panel-b) 60%, var(--panel-c) 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(41,182,246,0.08), 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.author-photo {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  filter: saturate(1.02);
+}
+
+.author-text {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--fg-dim);
+}
+
+.author-text .panel-content { padding: 40px 42px; }
+
+.author-text p { margin: 0 0 16px; }
+.author-text p:last-child { margin-bottom: 0; }
+
+.author-hello {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.18rem;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+}
+
+/* ── Философия ─────────────────────────────────────────────────── */
+.philosophy-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 28px;
+}
+
+.philosophy-card .panel-content { padding: 40px 34px; }
+
+.philosophy-icon {
+  font-size: 2.1rem;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 10px rgba(41,182,246,0.4));
+}
+
+.philosophy-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0 0 14px;
+}
+
+.philosophy-card p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  margin: 0;
+}
+
+/* ── Инфраструктура ────────────────────────────────────────────── */
+.infra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 26px;
+}
+
+.infra-card {
+  transition: transform 0.25s;
+}
+
+.infra-card:hover {
+  transform: translateY(-4px);
+}
+
+.infra-card:hover .panel-frame-stroke { stroke: #7fa8c9; }
+.infra-card:hover .panel-frame-glow-stroke { stroke: #6cd4ff; }
+
+.infra-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 32px 30px;
+}
+
+.infra-card-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  margin-bottom: 22px;
+}
+
+.infra-card-visual img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+}
+
+/* Блок 1 (Архив «Константы»): при наведении обложка сменяется разворотом книги */
+.infra-card-visual--swap { position: relative; }
+
+.infra-card-visual--swap img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: opacity 0.5s ease;
+}
+
+.infra-card-visual--swap .is-default { opacity: 1; }
+.infra-card-visual--swap .is-hover { opacity: 0; }
+
+.infra-card:hover .infra-card-visual--swap .is-default { opacity: 0; }
+.infra-card:hover .infra-card-visual--swap .is-hover { opacity: 1; }
+
+.infra-card-index {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--cyan-dim);
+  margin-bottom: 14px;
+}
+
+.infra-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0 0 16px;
+}
+
+.infra-card-sub {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--fg-faint);
+  margin-top: 4px;
+}
+
+.infra-card p {
+  flex: 1;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  margin: 0 0 26px;
+}
+
+.infra-card-btn {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 24px;
+  border: 1px solid rgba(100, 160, 200, 0.45);
+  color: rgba(160, 210, 240, 0.9);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.infra-card-btn:hover {
+  background: rgba(41, 100, 160, 0.18);
+  border-color: rgba(100, 180, 230, 0.8);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(41, 182, 246, 0.15);
+}
+
+/* ── Футер ─────────────────────────────────────────────────────── */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 6vw;
+  border-top: 1px solid rgba(41, 182, 246, 0.12);
+  background: rgba(0,0,0,0.25);
+  font-size: 0.98rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-faint);
+}
+
+.footer-links { display: flex; gap: 24px; }
+
+.footer-links a { transition: color 0.2s; }
+.footer-links a:hover { color: var(--cyan); }
+
+/* Кнопки пролистывания слайдов — видны и активны только в режиме слайд-шоу (десктоп) */
+.slide-nav-controls { display: none; }
+
+/* ── Появление секций при скролле ─────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Адаптив ───────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .author-block {
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .author-photo-frame { width: 260px; }
+}
+
+@media (max-width: 560px) {
+  .section { padding: 48px 6vw; }
+
+  .hero { padding: 64px 6vw 40px; min-height: 70vh; }
+
+  .hero-inner { gap: 24px; }
+
+  .hero-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+
+  .hero-lead { font-size: 1.08rem; }
+
+  .cta-btn { width: 100%; padding: 16px 12px; font-size: 1rem; letter-spacing: 0.06em; }
+
+  .infra-card-visual { height: 160px; }
+
+  .site-footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ДИАФИЛЬМ: слайд-навигация + приборная панель (только десктоп)
+   ═══════════════════════════════════════════════════════════════ */
+@media (min-width: 861px) {
+
+  html, body { height: 100%; overflow: hidden; }
+
+  /* ── Бронзовая табличка-заклёпками: общая «начинка» для кнопок и подписей ── */
+  :root { --phosphor: #e8b45c; --phosphor-dim: rgba(232, 180, 92, 0.6); }
+
+  .plaque { position: relative; }
+
+  .plaque-frame-svg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    transition: filter 0.25s;
+  }
+
+  .plaque-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    color: var(--phosphor-dim);
+    transition: color 0.25s;
+  }
+
+  .plaque:hover .plaque-frame-svg {
+    filter: brightness(1.2) drop-shadow(0 0 6px rgba(232, 180, 92, 0.45));
+  }
+
+  .plaque:hover .plaque-content { color: #fbe8c8; }
+
+  /* Копирайт — не кнопка и никуда не ведёт, свечение при наведении не нужно */
+  .footer-copy { cursor: default; }
+  .footer-copy:hover .plaque-frame-svg { filter: none; }
+  .footer-copy:hover .plaque-content { color: var(--phosphor-dim); }
+
+  .slide-dot.is-active .plaque-frame-svg {
+    filter: brightness(1.32) drop-shadow(0 0 10px rgba(232, 180, 92, 0.6));
+  }
+
+  .slide-dot.is-active .plaque-content { color: #fff8ec; }
+
+  /* ── Шапка: без подложки, только кнопки-таблички ─────────────── */
+  .site-header {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom: none;
+    box-shadow: none;
+  }
+
+  .slide-dots { display: flex; gap: 10px; }
+
+  .slide-dot {
+    padding: 9px 16px;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  .slide-dot-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--phosphor);
+    text-shadow: 0 0 6px rgba(232, 180, 92, 0.5);
+  }
+
+  .slide-dot-label { font-size: 0.85rem; letter-spacing: 0.02em; }
+
+  .slide-dot.is-active .slide-dot-num { color: #fff8ec; text-shadow: 0 0 8px var(--phosphor); }
+
+  /* ── Слайд-трек ───────────────────────────────────────────────── */
+  .slides-viewport {
+    position: fixed;
+    top: var(--header-h);
+    bottom: var(--footer-h);
+    left: 0;
+    right: 0;
+    overflow: hidden;
+  }
+
+  .slides-track {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+    will-change: transform;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(41, 182, 246, 0.35) transparent;
+  }
+
+  .slide::-webkit-scrollbar { width: 8px; }
+  .slide::-webkit-scrollbar-thumb {
+    background: rgba(41, 182, 246, 0.3);
+    border-radius: 4px;
+  }
+
+  .hero.slide { min-height: 100%; }
+
+  .section.slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+  }
+
+  /* ── Футер: без подложки, просто кнопки-«экранчики» ──────────── */
+  .site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: var(--footer-h);
+    padding: 0 5vw;
+    border-top: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .footer-copy {
+    padding: 13px 22px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  .slide-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .slide-nav-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 1.05rem;
+    cursor: pointer;
+  }
+
+  .slide-nav-btn:disabled { opacity: 0.28; cursor: not-allowed; pointer-events: none; }
+
+  .slide-counter {
+    padding: 8px 14px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    min-width: 78px;
+  }
+
+  .footer-links a {
+    padding: 13px 22px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 1150px) and (min-width: 861px) {
+  .slide-dot-label { display: none; }
+  .slide-dot { padding: 8px 11px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   МИНИ-ИГРА «ОХОТА НА БАГИ» (десктоп, включается по клику на лого)
+   ═══════════════════════════════════════════════════════════════ */
+.game-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+}
+
+.game-overlay[hidden] { display: none; }
+
+.game-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 5, 8, 0.72);
+  animation: gameFadeIn 0.35s ease;
+}
+
+@keyframes gameFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Область, где реально живут баги/фичи — обрезана по форме иллюминатора,
+   так что объекты у самого края визуально «прячутся» за бронзовой рамкой. */
+.game-field {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Обрезаем по форме иллюминатора только там, где эта рамка реально есть на фоне */
+@media (min-width: 861px) {
+  .game-field {
+    clip-path: polygon(6% 15%, 11% 10%, 89% 10%, 94% 15%, 94% 84%, 89% 89%, 11% 89%, 6% 84%);
+  }
+}
+
+/* Пока игра открыта — виден только фон, весь слайд-контент прячем */
+body.game-open .slides-viewport { visibility: hidden; }
+
+.game-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background: rgba(8, 14, 20, 0.65);
+  border: 1px solid rgba(41, 182, 246, 0.4);
+  border-radius: 50%;
+  color: var(--fg-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.game-close:hover {
+  border-color: var(--cyan);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(41, 182, 246, 0.35);
+}
+
+.game-hud {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+.game-hud-lives { letter-spacing: 0.15em; }
+
+@media (max-width: 480px) {
+  .game-hud {
+    top: 14px;
+    gap: 12px;
+    font-size: 0.85rem;
+    max-width: calc(100vw - 150px);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .game-close { top: 10px; right: 10px; width: 34px; height: 34px; font-size: 0.95rem; }
+
+  .game-panel { padding: 26px 22px; }
+  .game-panel h3 { font-size: 1.08rem; }
+  .game-panel p { font-size: 0.95rem; margin-bottom: 18px; }
+}
+
+/* ── Панели: правила / победа / game over ─────────────────────── */
+.game-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  max-width: 480px;
+  width: min(90vw, 480px);
+  padding: 36px 38px;
+  text-align: center;
+  background: linear-gradient(160deg, var(--panel-a) 0%, var(--panel-b) 60%, var(--panel-c) 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(41, 182, 246, 0.1), 0 24px 60px rgba(0, 0, 0, 0.6);
+  animation: gamePanelIn 0.35s ease;
+}
+
+@keyframes gamePanelIn {
+  from { opacity: 0; transform: translate(-50%, -46%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.game-panel[hidden] { display: none; }
+
+.game-panel h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+  margin: 0 0 16px;
+}
+
+.game-panel p {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+  margin: 0 0 24px;
+}
+
+.game-panel .cta-btn { width: 100%; }
+
+.game-again-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px 28px;
+  background: transparent;
+  border: 1px solid rgba(100, 160, 200, 0.35);
+  color: var(--fg-dim);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.game-again-btn:hover {
+  border-color: rgba(100, 180, 230, 0.7);
+  color: #fff;
+}
+
+/* ── Баги и фичи ───────────────────────────────────────────────── */
+.game-obj {
+  position: absolute;
+  top: -90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  transition: top linear;
+}
+
+.game-obj.is-bug {
+  background: radial-gradient(circle at 35% 30%, #4a1c1c 0%, #2a0e0e 80%);
+  border: 2px solid rgba(255, 90, 90, 0.7);
+  box-shadow: 0 0 14px rgba(255, 60, 60, 0.35), inset 0 0 10px rgba(255, 60, 60, 0.2);
+  color: #ffb3b3;
+}
+
+.game-obj.is-feature {
+  background: radial-gradient(circle at 35% 30%, #1c4a2a 0%, #0e2a17 80%);
+  border: 2px solid rgba(90, 255, 140, 0.6);
+  box-shadow: 0 0 14px rgba(60, 255, 130, 0.3), inset 0 0 10px rgba(60, 255, 130, 0.18);
+  color: #b3ffcf;
+}
+
+.game-obj-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+
+.game-obj.is-popping {
+  animation: gameObjPop 0.28s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes gameObjPop {
+  to { transform: scale(1.7); opacity: 0; }
+}
+
+.game-float {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  pointer-events: none;
+  animation: gameFloatUp 0.7s ease forwards;
+}
+
+@keyframes gameFloatUp {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-40px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   БЛИК НА КНОПКАХ — та же техника, что у названия сайта в шапке
+   ОС Крона (анимированный градиент через background-position),
+   только редко и ненавязчиво: почти всё время пауза, сам блик — доля секунды.
+   ═══════════════════════════════════════════════════════════════ */
+.cta-btn::after,
+.infra-card-btn::after,
+.game-again-btn::after,
+.game-close::after,
+.plaque::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.12) 50%, transparent 75%);
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  background-position: -60% 0;
+  animation: btnShine 14s ease-in-out infinite;
+}
+
+@keyframes btnShine {
+  0%, 55%  { background-position: -60% 0; }
+  80%      { background-position: 160% 0; }
+  100%     { background-position: 160% 0; }
+}
+
+/* Разные периоды и небольшой сдвиг — чтобы соседние кнопки не мигали хором */
+.infra-card:nth-child(2) .infra-card-btn::after { animation-duration: 15.5s; animation-delay: 2s; }
+.infra-card:nth-child(3) .infra-card-btn::after { animation-duration: 13s;   animation-delay: 4.5s; }
+
+.slide-dot:nth-child(2)::after { animation-delay: 1.5s; }
+.slide-dot:nth-child(3)::after { animation-delay: 3.5s; }
+.slide-dot:nth-child(4)::after { animation-delay: 5.5s; }
+
+.game-again-btn::after { animation-duration: 13.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-btn::after,
+  .infra-card-btn::after,
+  .game-again-btn::after,
+  .game-close::after,
+  .plaque::after {
+    animation: none;
+    display: none;
+  }
+}

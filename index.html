@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Орбита QA — тестируй. Ломай. Читай.</title>
+  <meta name="description" content="Орбита QA — вселенная, где хардкорное IT встречается с научной фантастикой. Книга, курс и песочница для изучения тестирования." />
+  <link rel="canonical" href="https://orbita-qa.ru/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://orbita-qa.ru/" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:title" content="Орбита QA — тестируй. Ломай. Читай." />
+  <meta property="og:description" content="Вселенная, где хардкорное IT встречается с научной фантастикой. Книга, курс и песочница для изучения тестирования." />
+  <meta property="og:image" content="https://orbita-qa.ru/images/logo.webp" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Орбита QA — тестируй. Ломай. Читай." />
+  <meta name="twitter:description" content="Вселенная, где хардкорное IT встречается с научной фантастикой. Книга, курс и песочница для изучения тестирования." />
+  <meta name="twitter:image" content="https://orbita-qa.ru/images/logo.webp" />
+
+  <link rel="icon" href="images/logo.webp" type="image/webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Общие SVG-ресурсы для рамок-панелей (техника из Пищевого синтезатора) -->
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="panel-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1c2d42" stop-opacity="0.92" />
+        <stop offset="100%" stop-color="#0d1520" stop-opacity="0.96" />
+      </linearGradient>
+      <filter id="panel-glow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+
+      <!-- Бронзовая табличка-заклёпками (для кнопок и подписей шапки/футера) -->
+      <linearGradient id="plaque-border" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e0c288" />
+        <stop offset="35%" stop-color="#a97c3f" />
+        <stop offset="70%" stop-color="#6c4a24" />
+        <stop offset="100%" stop-color="#40290f" />
+      </linearGradient>
+      <radialGradient id="plaque-patina" cx="18%" cy="82%" r="65%">
+        <stop offset="0%" stop-color="#5fa88f" stop-opacity="0.5" />
+        <stop offset="100%" stop-color="#5fa88f" stop-opacity="0" />
+      </radialGradient>
+      <linearGradient id="plaque-screen" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#333c46" />
+        <stop offset="100%" stop-color="#1a1f25" />
+      </linearGradient>
+      <radialGradient id="plaque-rivet" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#f2ddac" />
+        <stop offset="45%" stop-color="#a97c3f" />
+        <stop offset="100%" stop-color="#33220e" />
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <!-- ═══ ШАПКА-ПАНЕЛЬ ═══ -->
+  <header class="site-header">
+    <button type="button" class="brand" id="logoGameTrigger" aria-label="Орбита QA — нажми, чтобы поиграть">
+      <img src="images/orbita-qa-badge.webp" alt="Орбита QA" class="brand-logo" />
+    </button>
+    <nav class="slide-dots" aria-label="Навигация по разделам">
+      <button type="button" class="slide-dot plaque" data-slide-goto="0" aria-label="Главная">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content"><span class="slide-dot-num">01</span><span class="slide-dot-label">Главная</span></span>
+      </button>
+      <button type="button" class="slide-dot plaque" data-slide-goto="1" aria-label="Инфраструктура">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content"><span class="slide-dot-num">02</span><span class="slide-dot-label">Инфраструктура</span></span>
+      </button>
+      <button type="button" class="slide-dot plaque" data-slide-goto="2" aria-label="Философия">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content"><span class="slide-dot-num">03</span><span class="slide-dot-label">Философия</span></span>
+      </button>
+      <button type="button" class="slide-dot plaque" data-slide-goto="3" aria-label="Автор">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content"><span class="slide-dot-num">04</span><span class="slide-dot-label">Автор</span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="slides-viewport">
+    <div class="slides-track">
+
+      <!-- ═══ ГЕРОЙ-ЭКРАН ═══ -->
+      <section id="top" class="hero slide">
+        <div class="hero-inner">
+          <h1 class="hero-title">
+            ОРБИТА QA<span class="hero-title-sep">:</span><br />
+            <span class="hero-title-sub">ТЕСТИРУЙ. ЛОМАЙ. ЧИТАЙ.</span>
+          </h1>
+          <p class="hero-lead">
+            Вселенная, где хардкорное IT встречается с научной фантастикой.
+            Изучаем тестирование в безопасной среде, практикуемся на живой системе
+            и погружаемся в историю.
+          </p>
+          <button type="button" class="cta-btn" data-slide-goto="1">[ НАЧАТЬ ПОГРУЖЕНИЕ ]</button>
+        </div>
+        <button type="button" class="hero-scroll-hint" data-slide-next aria-label="Следующий слайд">▾</button>
+      </section>
+
+      <!-- ═══ ИНФРАСТРУКТУРА ОРБИТЫ ═══ -->
+      <section id="infrastructure" class="section infra-section slide">
+    <h2 class="section-title">Инфраструктура орбиты</h2>
+    <div class="infra-grid">
+
+      <article class="infra-card panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content infra-card-content">
+          <div class="infra-card-index">Блок 1</div>
+          <div class="infra-card-visual infra-card-visual--swap">
+            <img src="images/book-archive.webp" alt="Обложка книги «Архив «Константы»»" class="is-default" />
+            <img src="images/book-archive-open.webp" alt="Разворот книги «Архив «Константы»»" class="is-hover" />
+          </div>
+          <h3 class="infra-card-title">Архив «Константы» <span class="infra-card-sub">(Книга)</span></h3>
+          <p>
+            Сердце нашей вселенной. Не просто фоновый «лор», а полноценный
+            научно-фантастический роман. Захватывающая история о подростке,
+            который проверяет реальность на прочность, ищет пропавшую сестру
+            и незаметно для себя учится мыслить как настоящий инженер.
+          </p>
+          <a href="#" class="infra-card-btn">Читать на a.today</a>
+        </div>
+      </article>
+
+      <article class="infra-card panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content infra-card-content">
+          <div class="infra-card-index">Блок 2</div>
+          <div class="infra-card-visual">
+            <img src="images/course-logo.webp" alt="Логотип курса «Начни в тестировании»" />
+          </div>
+          <h3 class="infra-card-title">Учебный курс</h3>
+          <p>
+            Изучаем тестирование без духоты и токсичности. Идём по сюжету шаг
+            за шагом, ловим виртуальных жуков вместе с героями и переводим
+            сухую теорию QA на понятный, человеческий язык. Будет точно не скучно!
+          </p>
+          <a href="https://stepik.org/course/269115/" class="infra-card-btn" target="_blank" rel="noopener">Открыть на Stepik</a>
+        </div>
+      </article>
+
+      <article class="infra-card panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content infra-card-content">
+          <div class="infra-card-index">Блок 3</div>
+          <div class="infra-card-visual">
+            <img src="images/sandbox-krona-static.webp" data-hover-src="images/sandbox-krona-anim.webp" alt="Иллюстрация песочницы «ОС Крона»" />
+          </div>
+          <h3 class="infra-card-title">Песочница <span class="infra-card-sub">(Тренажёр)</span></h3>
+          <p>
+            Твой личный полигон, где официально разрешено нажимать «не те»
+            кнопки. Открывай виртуальные терминалы и ломай систему своими
+            руками, чтобы поймать то самое крутое чувство: «Я наконец-то
+            понимаю, как это устроено под капотом!»
+          </p>
+          <a href="https://krona.orbita-qa.ru" class="infra-card-btn" target="_blank" rel="noopener">Поехали!</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══ ФИЛОСОФИЯ ═══ -->
+  <section id="philosophy" class="section philosophy-section slide">
+    <h2 class="section-title">Моя философия</h2>
+    <div class="philosophy-grid">
+      <div class="philosophy-card panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content">
+          <div class="philosophy-icon">🛡️</div>
+          <h3 class="philosophy-title">Безопасная среда</h3>
+          <p>
+            Здесь не бывает глупых вопросов. Ошибаться на платформе — можно
+            и нужно. Мы не опускаем планку, не используем дешевых гэгов и
+            общаемся с уважением. Вы всегда можете рассчитывать на мою поддержку,
+            подробные ответы и вежливое комьюнити.
+          </p>
+        </div>
+      </div>
+      <div class="philosophy-card panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content">
+          <div class="philosophy-icon">⚙️</div>
+          <h3 class="philosophy-title">Фундамент для инженера</h3>
+          <p>
+            Мы начинаем с базы. В этом курсе мы закладываем прочный фундамент
+            профессии тестировщика. Это первый, но самый важный шаг на пути
+            к тому, чтобы в будущем начать понимать бизнес-логику сложных
+            продуктов, а не просто бездумно нажимать на кнопки.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ КТО ПО ТУ СТОРОНУ ЭКРАНА ═══ -->
+  <section id="author" class="section author-section slide">
+    <h2 class="section-title">Кто по ту сторону экрана?</h2>
+    <div class="author-block">
+      <div class="author-photo-frame">
+        <img src="images/author.webp" alt="Наталья" class="author-photo" />
+      </div>
+      <div class="author-text panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content">
+          <p class="author-hello">Привет! Меня зовут Наталья.</p>
+          <p>Я QA-автоматизатор, преподаватель и писатель.</p>
+          <p>
+            Вся моя работа — это построение сложных систем, будь то архитектура
+            микросервисов или сюжет романа. Но дают они мне совершенно разное.
+            Если грамотно написанный код и работающий сайт приносят суровую
+            инженерную гордость, то создание истории и персонажей — это
+            настоящая эмоциональная радость и возможность прожить новый опыт.
+          </p>
+          <p>
+            «Орбита QA» родилась из желания объединить эти два чувства. Я
+            придумала мир, в котором мне самой хотелось бы оказаться. Место,
+            где можно включить мозг на полную мощность, как в лучшие моменты
+            моего преподавательского прошлого. Моя книга, курс и песочница —
+            это части одной вселенной.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    </div><!-- /slides-track -->
+  </main><!-- /slides-viewport -->
+
+  <!-- ═══ ФУТЕР-ПАНЕЛЬ ═══ -->
+  <footer class="site-footer">
+    <span class="footer-copy plaque">
+      <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+        <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+        <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+        <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+        <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+        <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+        <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+      </svg>
+      <span class="plaque-content">2026 Орбита QA</span>
+    </span>
+
+    <div class="slide-nav-controls">
+      <button type="button" class="slide-nav-btn plaque" data-slide-prev aria-label="Предыдущий слайд">
+        <svg class="plaque-frame-svg" viewBox="0 0 60 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 51 2 L 58 9 L 58 51 L 51 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 51 2 L 58 9 L 58 51 L 51 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 45 8 L 52 15 L 52 45 L 45 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="49" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="49" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content">◂</span>
+      </button>
+      <span class="slide-counter plaque">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content"><span data-slide-counter-current>01</span> / 04</span>
+      </span>
+      <button type="button" class="slide-nav-btn plaque" data-slide-next aria-label="Следующий слайд">
+        <svg class="plaque-frame-svg" viewBox="0 0 60 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 51 2 L 58 9 L 58 51 L 51 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 51 2 L 58 9 L 58 51 L 51 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 45 8 L 52 15 L 52 45 L 45 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="49" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="49" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content">▸</span>
+      </button>
+    </div>
+
+    <span class="footer-links">
+      <a href="https://t.me/CarnivalZetaProjects" target="_blank" rel="noopener" class="plaque">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content">Telegram</span>
+      </a>
+    </span>
+  </footer>
+
+  <!-- ═══ МИНИ-ИГРА: «ОХОТА НА БАГИ» ═══ -->
+  <div class="game-overlay" id="bugGame" hidden>
+    <div class="game-dim"></div>
+    <button type="button" class="game-close" id="gameClose" aria-label="Закрыть игру">✕</button>
+
+    <!-- Сюда JS спавнит баги/фичи — область обрезана по форме иллюминатора,
+         поэтому объекты «прячутся» за рамкой на границе. -->
+    <div class="game-field" id="gameField"></div>
+
+    <div class="game-hud">
+      <span class="game-hud-score">Баллы: <span id="gameScoreVal">0</span></span>
+      <span class="game-hud-lives" id="gameLivesVal">❤️❤️❤️</span>
+    </div>
+
+    <div class="game-panel game-rules" id="gameRules">
+      <h3>Охота на баги</h3>
+      <p>Сбивай <b>баги</b> 🐛 404 500 — тапом или кликом.<br />Фичи ✅ 200&nbsp;OK 🧑‍🚀 не трогай — за них снимается жизнь!</p>
+      <button type="button" class="cta-btn game-start-btn" id="gameStartBtn">[ ПОЕХАЛИ ]</button>
+    </div>
+
+    <div class="game-panel game-win" id="gameWin" hidden>
+      <h3>🏆 Ачивка «Стажёр Аркаима»</h3>
+      <p>300 баллов! Инстинкты тестировщика уже проснулись — самое время прокачать их по-настоящему.</p>
+      <a href="https://stepik.org/course/269115/" target="_blank" rel="noopener" class="cta-btn">Начать курс</a>
+      <button type="button" class="game-again-btn" id="gameWinAgain">Играть ещё</button>
+    </div>
+
+    <div class="game-panel game-over" id="gameOver" hidden>
+      <h3>Жизни кончились</h3>
+      <p>Счёт: <span id="gameOverScoreVal">0</span></p>
+      <button type="button" class="cta-btn game-again-btn" id="gameOverAgain">Попробовать снова</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
