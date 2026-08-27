@@ -496,6 +496,9 @@ img { max-width: 100%; display: block; }
 /* Кнопки пролистывания слайдов — видны и активны только в режиме слайд-шоу (десктоп) */
 .slide-nav-controls { display: none; }
 
+/* Плавающая стрелка «следующий раздел» — только мобильный режим (см. медиа-блок ниже) */
+.mobile-next-btn { display: none; }
+
 /* ── Появление секций при скролле ─────────────────────────────── */
 .reveal {
   opacity: 0;
@@ -557,6 +560,46 @@ img { max-width: 100%; display: block; }
   }
 
   .slide-dot.is-active .slide-dot-num { color: #fff; }
+
+  .mobile-next-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 40;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    background: rgba(8, 14, 20, 0.75);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(41, 182, 246, 0.4);
+    border-radius: 50%;
+    color: var(--cyan);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), 0 0 14px rgba(41, 182, 246, 0.25);
+    animation: mobileNextBounce 2.2s ease-in-out infinite;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+
+  .mobile-next-btn.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(10px);
+  }
+
+  @keyframes mobileNextBounce {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-next-btn { animation: none; }
+  }
 }
 
 @media (max-width: 560px) {

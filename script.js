@@ -178,6 +178,7 @@ if (!isDesktop()) {
 // состояния нет (обычный скролл), поэтому следим сами через видимость секций.
 
 if (!isDesktop() && dots.length && slides.length) {
+  const mobileNextBtn = document.querySelector(".mobile-next-btn");
   const navObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -185,6 +186,8 @@ if (!isDesktop() && dots.length && slides.length) {
         const idx = slides.indexOf(entry.target);
         if (idx === -1) return;
         dots.forEach((dot, i) => dot.classList.toggle("is-active", i === idx));
+        // На последнем разделе больше некуда листать — прячем стрелку вниз
+        mobileNextBtn?.classList.toggle("is-hidden", idx === slides.length - 1);
       });
     },
     { threshold: 0.5 }

@@ -28,7 +28,7 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
 
@@ -405,6 +405,12 @@
     </span>
   </footer>
 
+  <!-- Только мобильный режим — на десктопе секции листаются кнопками-номерами
+       и колесом мыши, тут же обычный скролл не всегда очевиден, поэтому явная
+       стрелка «вниз». Использует ту же логику, что и десктопная next-кнопка
+       (data-slide-next, см. script.js) — на мобильном она скроллит на 90% экрана. -->
+  <button type="button" class="mobile-next-btn" data-slide-next aria-label="Следующий раздел">↓</button>
+
   <!-- ═══ МИНИ-ИГРА: «ОХОТА НА БАГИ» ═══ -->
   <div class="game-overlay" id="bugGame" hidden>
     <div class="game-dim"></div>
@@ -427,7 +433,7 @@
 
     <div class="game-panel game-win" id="gameWin" hidden>
       <h3>🏆 Ачивка «Стажёр Аркаима»</h3>
-      <p>300 баллов! Инстинкты тестировщика уже проснулись — самое время прокачать их по-настоящему.</p>
+      <p>100 баллов! Инстинкты тестировщика уже проснулись — самое время прокачать их по-настоящему.</p>
       <a href="https://stepik.org/course/269115/" target="_blank" rel="noopener" class="cta-btn">Начать курс</a>
       <button type="button" class="game-again-btn" id="gameWinAgain">Играть ещё</button>
     </div>
@@ -439,7 +445,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
   <script src="game.js?v=5"></script>
 </body>
 </html>
