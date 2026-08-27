@@ -61,13 +61,8 @@
     };
   }
 
-  // ВРЕМЕННО: для диагностики "шарики появляются с большой задержкой" на мобильных.
-  let _lastSpawnAt = null;
   function spawnObject() {
     if (!running) return;
-    const now = performance.now();
-    console.log(`[game] spawn #${objId + 1}, gap since previous: ${_lastSpawnAt ? Math.round(now - _lastSpawnAt) + "ms" : "—"}`);
-    _lastSpawnAt = now;
     const { fallMs } = currentDifficulty();
     const isBug = Math.random() < 0.58;
     const data = pick(isBug ? BUGS : FEATURES);
@@ -89,11 +84,15 @@
     el.style.left = `calc(${leftPct}% - ${OBJ_HALF}px)`;
     field.appendChild(el);
 
-    // Запускаем падение на следующем кадре, чтобы transition сработал
-    requestAnimationFrame(() => {
-      el.style.transitionDuration = fallMs + "ms";
-      el.style.top = "calc(100% + 90px)";
-    });
+    // Принудительный reflow между начальным (top:-90px из CSS) и целевым
+    // состоянием — иначе на некоторых мобильных рендерерах браузер схлопывает
+    // оба изменения в один кадр, и transition не проигрывается: объект
+    // мгновенно "прыгает" из-за верхнего края экрана за нижний, ни разу не
+    // попав в видимую область. requestAnimationFrame одного кадра для этого
+    // недостаточно надёжен; offsetHeight гарантированно фиксирует layout.
+    void el.offsetHeight;
+    el.style.transitionDuration = fallMs + "ms";
+    el.style.top = "calc(100% + 90px)";
 
     const cleanup = () => {
       liveObjects.delete(id);
