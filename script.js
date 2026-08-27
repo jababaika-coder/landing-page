@@ -179,18 +179,38 @@ if (!isDesktop()) {
 
 if (!isDesktop() && dots.length && slides.length) {
   const mobileNextBtn = document.querySelector(".mobile-next-btn");
+  // el → доля видимости. Два соседних раздела часто видны одновременно
+  // (один уходит, другой приходит) — раньше побеждал тот, чья запись в
+  // entries шла последней, что могло быть не тем разделом, который реально
+  // виднее. Теперь берём среди всех пересекающихся тот, у кого ratio больше.
+  const visibleRatios = new Map();
+
   const navObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const idx = slides.indexOf(entry.target);
-        if (idx === -1) return;
-        dots.forEach((dot, i) => dot.classList.toggle("is-active", i === idx));
-        // На последнем разделе больше некуда листать — прячем стрелку вниз
-        mobileNextBtn?.classList.toggle("is-hidden", idx === slides.length - 1);
+        if (entry.isIntersecting) {
+          visibleRatios.set(entry.target, entry.intersectionRatio);
+        } else {
+          visibleRatios.delete(entry.target);
+        }
       });
+      if (!visibleRatios.size) return;
+
+      let bestEl = null;
+      let bestRatio = -1;
+      visibleRatios.forEach((ratio, el) => {
+        if (ratio > bestRatio) {
+          bestRatio = ratio;
+          bestEl = el;
+        }
+      });
+      const idx = slides.indexOf(bestEl);
+      if (idx === -1) return;
+      dots.forEach((dot, i) => dot.classList.toggle("is-active", i === idx));
+      // На последнем разделе больше некуда листать — прячем стрелку вниз
+      mobileNextBtn?.classList.toggle("is-hidden", idx === slides.length - 1);
     },
-    { threshold: 0.5 }
+    { threshold: [0, 0.25, 0.5, 0.75, 1] }
   );
   slides.forEach((slide) => navObserver.observe(slide));
 }
