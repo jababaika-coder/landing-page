@@ -108,6 +108,13 @@
     // не под пальцем/курсором, из-за чего click не срабатывает. pointerdown бьёт мгновенно.
     el.addEventListener("pointerdown", (e) => {
       e.preventDefault();
+      // На тач-устройствах элемент неявно получает pointer capture. Если он
+      // удаляется из DOM (onHit → remove через 300мс) с активным захватом,
+      // некоторые мобильные браузеры перестают доставлять pointerdown другим
+      // объектам — игра выглядит "замёрзшей" после первого пойманного объекта.
+      if (el.hasPointerCapture?.(e.pointerId)) {
+        el.releasePointerCapture(e.pointerId);
+      }
       onHit(id, isBug, el);
     });
 
