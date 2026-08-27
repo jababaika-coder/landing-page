@@ -525,12 +525,12 @@ img { max-width: 100%; display: block; }
   /* Навигация по разделам — на десктопе это широкие бронзовые таблички,
      сюда они не влезают. Тут просто компактные кружки с номером; клик уже
      умеет доскроллить до нужного раздела (см. script.js, ветка !isDesktop()). */
-  .slide-dots { display: flex; gap: 8px; }
+  .slide-dots { display: flex; gap: 10px; }
 
   .slide-dot {
     position: relative;
-    width: 34px;
-    height: 34px;
+    width: 46px;
+    height: 46px;
     padding: 0;
     display: flex;
     align-items: center;
@@ -547,7 +547,7 @@ img { max-width: 100%; display: block; }
   .slide-dot-num {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.78rem;
+    font-size: 1rem;
     color: var(--fg-dim);
   }
 
