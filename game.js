@@ -61,8 +61,13 @@
     };
   }
 
+  // ВРЕМЕННО: для диагностики "шарики появляются с большой задержкой" на мобильных.
+  let _lastSpawnAt = null;
   function spawnObject() {
     if (!running) return;
+    const now = performance.now();
+    console.log(`[game] spawn #${objId + 1}, gap since previous: ${_lastSpawnAt ? Math.round(now - _lastSpawnAt) + "ms" : "—"}`);
+    _lastSpawnAt = now;
     const { fallMs } = currentDifficulty();
     const isBug = Math.random() < 0.58;
     const data = pick(isBug ? BUGS : FEATURES);
