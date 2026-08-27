@@ -521,6 +521,42 @@ img { max-width: 100%; display: block; }
   }
 
   .author-photo-frame { width: 260px; }
+
+  /* Навигация по разделам — на десктопе это широкие бронзовые таблички,
+     сюда они не влезают. Тут просто компактные кружки с номером; клик уже
+     умеет доскроллить до нужного раздела (см. script.js, ветка !isDesktop()). */
+  .slide-dots { display: flex; gap: 8px; }
+
+  .slide-dot {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 14, 20, 0.65);
+    border: 1px solid rgba(41, 182, 246, 0.35);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .slide-dot-label { display: none; }
+
+  .slide-dot-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--fg-dim);
+  }
+
+  .slide-dot.is-active {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px rgba(41, 182, 246, 0.4);
+  }
+
+  .slide-dot.is-active .slide-dot-num { color: #fff; }
 }
 
 @media (max-width: 560px) {

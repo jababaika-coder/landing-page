@@ -19,7 +19,7 @@
   const livesVal = document.getElementById("gameLivesVal");
   const overScoreVal = document.getElementById("gameOverScoreVal");
 
-  const WIN_SCORE = 300;
+  const WIN_SCORE = 100;
   const MISS_PENALTY = 10;
   const START_LIVES = 3;
 

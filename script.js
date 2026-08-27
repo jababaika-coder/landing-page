@@ -173,6 +173,25 @@ if (!isDesktop()) {
   revealTargets.forEach((el) => observer.observe(el));
 }
 
+// ═══ Подсветка активного пункта навигации при скролле (мобильный режим) ══
+// На десктопе активный пункт ставит goToSlide(); на мобильном слайдов как
+// состояния нет (обычный скролл), поэтому следим сами через видимость секций.
+
+if (!isDesktop() && dots.length && slides.length) {
+  const navObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const idx = slides.indexOf(entry.target);
+        if (idx === -1) return;
+        dots.forEach((dot, i) => dot.classList.toggle("is-active", i === idx));
+      });
+    },
+    { threshold: 0.5 }
+  );
+  slides.forEach((slide) => navObserver.observe(slide));
+}
+
 // ═══ Анимированные картинки, которые «оживают» только при наведении ══════
 // <img> не умеет play/pause — поэтому реально подменяем src: наведение
 // ставит анимацию, уход курсора возвращает статичный кадр (без него анимация
