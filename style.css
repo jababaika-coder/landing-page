@@ -9,8 +9,12 @@
   --fg: rgba(220, 235, 248, 0.92);
   --fg-dim: rgba(160, 200, 230, 0.62);
   --fg-faint: rgba(140, 180, 210, 0.45);
-  --font-display: 'Orbitron', 'Montserrat', sans-serif;
-  --font-body: 'Rajdhani', 'Montserrat', sans-serif;
+  /* Orbitron/Rajdhani не поддерживают кириллицу — в заголовках, где
+     латиница (QA, API...) стоит рядом с кириллицей, буквы падали в разные
+     шрифты и визуально отличались по размеру. Exo 2 держит оба алфавита
+     в одном начертании и сохраняет геометричный sci-fi характер. */
+  --font-display: 'Exo 2', 'Montserrat', sans-serif;
+  --font-body: 'Exo 2', 'Montserrat', sans-serif;
 }
 
 * { box-sizing: border-box; }
