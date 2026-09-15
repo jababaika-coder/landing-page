@@ -479,7 +479,7 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 0 20px rgba(41, 182, 246, 0.15);
 }
 
-.infra-card-btn.is-countdown {
+.is-countdown {
   font-variant-numeric: tabular-nums;
   color: rgba(160, 210, 240, 0.55);
   border-color: rgba(100, 160, 200, 0.25);
@@ -487,7 +487,7 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-.infra-card-btn.is-countdown:hover {
+.is-countdown:hover {
   background: none;
   border-color: rgba(100, 160, 200, 0.25);
   box-shadow: none;
