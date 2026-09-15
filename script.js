@@ -233,3 +233,57 @@ document.querySelectorAll("[data-hover-src]").forEach((img) => {
     img.src = defaultSrc;
   });
 });
+
+// ═══ Обратный отсчёт до релиза на кнопках инфраструктуры ══════════════════
+// Пока не наступила дата из data-release, кнопка вместо ссылки показывает
+// таймер и не кликается; как только время истекло — возвращается обычной
+// кликабельной кнопкой с исходным текстом (без перезагрузки страницы).
+
+const countdownBtns = Array.from(document.querySelectorAll("[data-release]")).map((el) => ({
+  el,
+  releaseTime: new Date(el.dataset.release).getTime(),
+  originalText: el.textContent,
+  originalHref: el.getAttribute("href"),
+}));
+
+function pad2(n) {
+  return String(n).padStart(2, "0");
+}
+
+function tickCountdowns() {
+  const now = Date.now();
+  let stillCounting = false;
+
+  countdownBtns.forEach((btn) => {
+    const diff = btn.releaseTime - now;
+
+    if (diff <= 0) {
+      if (btn.el.classList.contains("is-countdown")) {
+        btn.el.classList.remove("is-countdown");
+        btn.el.textContent = btn.originalText;
+        btn.el.setAttribute("href", btn.originalHref);
+      }
+      return;
+    }
+
+    stillCounting = true;
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const clock = `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`;
+
+    btn.el.classList.add("is-countdown");
+    btn.el.removeAttribute("href");
+    btn.el.textContent = days > 0 ? `До выхода: ${days}д ${clock}` : `До выхода: ${clock}`;
+  });
+
+  if (!stillCounting) clearInterval(countdownInterval);
+}
+
+let countdownInterval;
+if (countdownBtns.length) {
+  tickCountdowns();
+  countdownInterval = setInterval(tickCountdowns, 1000);
+}
