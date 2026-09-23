@@ -111,6 +111,24 @@
     background: var(--cyan);
     color: #05080c;
   }
+
+  /* clip-path на родителе становится containing block для position:fixed —
+     а именно так Plyr показывает полноэкранный режим на Android/десктопе.
+     Без этого сброса весь экран обрезался бы до формы декоративной рамки
+     (см. чат: «не работает в мобильном браузере, если развернуть»). */
+  body.is-fullscreen .frame {
+    clip-path: none;
+    box-shadow: none;
+    max-width: none;
+    padding: 0;
+  }
+  body.is-fullscreen .frame-inner {
+    clip-path: none;
+  }
+  body.is-fullscreen .frame::before,
+  body.is-fullscreen .frame::after {
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -133,7 +151,7 @@
       if (poster) videoEl.poster = '/videos/' + poster;
     }
 
-    new Plyr('#player', {
+    const plyr = new Plyr('#player', {
       controls: [
         'play-large', 'play', 'progress', 'current-time', 'duration',
         'mute', 'volume', 'settings', 'pip', 'fullscreen',
@@ -141,6 +159,10 @@
       settings: ['speed'],
       speed: { selected: 1, options: [0.75, 1, 1.25, 1.5, 2] },
     });
+
+    // См. CSS-комментарий выше про clip-path и containing block.
+    plyr.on('enterfullscreen', () => document.body.classList.add('is-fullscreen'));
+    plyr.on('exitfullscreen', () => document.body.classList.remove('is-fullscreen'));
   </script>
 </body>
 </html>
