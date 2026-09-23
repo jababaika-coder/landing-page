@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Орбита QA — плеер</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700;900&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" />
+
+<style>
+  :root {
+    --panel-a: #1c2d42;
+    --panel-c: #111c2a;
+    --border: #2a4060;
+    --cyan: #29B6F6;
+    --cyan-dim: rgba(41, 182, 246, 0.45);
+    --fg: rgba(220, 235, 248, 0.92);
+
+    /* Перекраска Plyr под фирменные цвета сайта — переменные самой библиотеки. */
+    --plyr-color-main: var(--cyan);
+    --plyr-video-background: #05080c;
+    --plyr-menu-background: #111c2a;
+    --plyr-menu-color: var(--fg);
+    --plyr-tooltip-background: #111c2a;
+    --plyr-tooltip-color: var(--fg);
+    --plyr-font-family: 'Exo 2', 'Montserrat', sans-serif;
+    --plyr-control-icon-size: 18px;
+    --plyr-control-spacing: 10px;
+    --plyr-video-control-color: var(--fg);
+    --plyr-video-control-background-hover: var(--cyan);
+    --plyr-video-control-color-hover: #05080c;
+    --plyr-range-fill-background: var(--cyan);
+    --plyr-audio-controls-background: var(--panel-a);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Exo 2', 'Montserrat', sans-serif;
+  }
+
+  /* Панель-рамка со срезанными углами — тот же язык, что у карточек сайта. */
+  .frame {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    padding: 3px;
+    background: linear-gradient(160deg, var(--panel-a) 0%, var(--panel-c) 100%);
+    clip-path: polygon(
+      18px 0, calc(100% - 18px) 0, 100% 18px,
+      100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%,
+      0 calc(100% - 18px), 0 18px
+    );
+    box-shadow: 0 0 0 1px var(--border), 0 0 28px rgba(41, 182, 246, 0.15);
+  }
+
+  .frame-inner {
+    position: relative;
+    clip-path: polygon(
+      17px 0, calc(100% - 17px) 0, 100% 17px,
+      100% calc(100% - 17px), calc(100% - 17px) 100%, 17px 100%,
+      0 calc(100% - 17px), 0 17px
+    );
+    background: #05080c;
+    overflow: hidden;
+  }
+
+  /* Уголки-рёбра, как у панелей на лендинге — чисто декоративный штрих. */
+  .frame::before, .frame::after {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid var(--cyan-dim);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .frame::before { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+  .frame::after  { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+  .plyr {
+    border-radius: 0;
+    --plyr-video-controls-background: linear-gradient(rgba(5,8,12,0) 0%, rgba(5,8,12,0.85) 100%);
+  }
+
+  /* Крупная кнопка play поверх постера — в цвет акцента, без белого пятна по умолчанию. */
+  .plyr__control--overlaid {
+    background: rgba(17, 28, 42, 0.85);
+    border: 1px solid var(--cyan-dim);
+    box-shadow: 0 0 24px rgba(41, 182, 246, 0.35);
+  }
+  .plyr__control--overlaid:hover {
+    background: var(--cyan);
+  }
+
+  .plyr__control.plyr__tab-focus,
+  .plyr__control:hover,
+  .plyr__control[aria-expanded=true] {
+    background: var(--cyan);
+    color: #05080c;
+  }
+</style>
+</head>
+<body>
+
+  <div class="frame">
+    <div class="frame-inner">
+      <video id="player" playsinline controls></video>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const src = params.get('src');
+    const poster = params.get('poster');
+    const videoEl = document.getElementById('player');
+
+    if (src) {
+      videoEl.src = '/videos/' + src;
+      if (poster) videoEl.poster = '/videos/' + poster;
+    }
+
+    new Plyr('#player', {
+      controls: [
+        'play-large', 'play', 'progress', 'current-time', 'duration',
+        'mute', 'volume', 'settings', 'pip', 'fullscreen',
+      ],
+      settings: ['speed'],
+      speed: { selected: 1, options: [0.75, 1, 1.25, 1.5, 2] },
+    });
+  </script>
+</body>
+</html>
