@@ -26,8 +26,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Exo+2:wght@500;600;700;900&display=swap"
-    rel="stylesheet"
+    rel="stylesheet" media="print" onload="this.media='all'"
   />
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Exo+2:wght@500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </noscript>
 
   <link rel="stylesheet" href="style.css?v=5" />
 </head>
@@ -165,8 +171,8 @@
         <div class="panel-content infra-card-content">
           <div class="infra-card-index">Блок 1</div>
           <div class="infra-card-visual infra-card-visual--swap">
-            <img src="images/book-archive.webp" alt="Обложка книги «Архив «Константы»»" class="is-default" />
-            <img src="images/book-archive-open.webp" alt="Разворот книги «Архив «Константы»»" class="is-hover" />
+            <img loading="lazy" decoding="async" src="images/book-archive.webp" alt="Обложка книги «Архив «Константы»»" class="is-default" />
+            <img data-lazy-src="images/book-archive-open.webp" alt="Разворот книги «Архив «Константы»»" class="is-hover" />
           </div>
           <h3 class="infra-card-title">Архив «Константы» <span class="infra-card-sub">(Книга)</span></h3>
           <p>
@@ -194,8 +200,8 @@
         <div class="panel-content infra-card-content">
           <div class="infra-card-index">Блок 2</div>
           <div class="infra-card-visual infra-card-visual--swap">
-            <img src="images/course-logo.webp" alt="Логотип курса «Начни в тестировании»" class="is-default" />
-            <img src="images/course-logo-hover.webp" alt="Проверка систем: время чая!" class="is-hover" />
+            <img loading="lazy" decoding="async" src="images/course-logo.webp" alt="Логотип курса «Начни в тестировании»" class="is-default" />
+            <img data-lazy-src="images/course-logo-hover.webp" alt="Проверка систем: время чая!" class="is-hover" />
           </div>
           <h3 class="infra-card-title">Учебный курс</h3>
           <p>
@@ -222,7 +228,7 @@
         <div class="panel-content infra-card-content">
           <div class="infra-card-index">Блок 3</div>
           <div class="infra-card-visual">
-            <img src="images/sandbox-krona-static.webp" data-hover-src="images/sandbox-krona-anim.webp" alt="Иллюстрация песочницы «ОС Крона»" />
+            <img loading="lazy" decoding="async" src="images/sandbox-krona-static.webp" data-hover-src="images/sandbox-krona-anim.webp" alt="Иллюстрация песочницы «ОС Крона»" />
           </div>
           <h3 class="infra-card-title">Песочница <span class="infra-card-sub">(Тренажёр)</span></h3>
           <p>
@@ -296,8 +302,8 @@
     <h2 class="section-title">Кто по ту сторону экрана?</h2>
     <div class="author-block">
       <div class="author-photo-frame">
-        <img src="images/author.webp?v=2" alt="Наталья" class="author-photo is-default" />
-        <img src="images/author_2.webp?v=2" alt="Наталья" class="author-photo is-hover" />
+        <img loading="lazy" decoding="async" src="images/author.webp?v=2" alt="Наталья" class="author-photo is-default" />
+        <img data-lazy-src="images/author_2.webp?v=2" alt="Наталья" class="author-photo is-hover" />
       </div>
       <div class="author-text panel">
         <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
@@ -446,7 +452,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
   <script src="game.js?v=5"></script>
 </body>
 </html>

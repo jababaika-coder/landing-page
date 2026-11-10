@@ -152,26 +152,23 @@ function handleBreakpointChange() {
 mql.addEventListener("change", handleBreakpointChange);
 handleBreakpointChange();
 
-// ═══ Плавное появление секций при скролле (только мобильный режим) ═══════
+// ═══ Контент показываем сразу ═══════════════════════════════════════════
+// Раньше на мобильных секции «проявлялись» при скролле (класс .reveal).
+// На медленной сети (ВПН, плохой мобильный интернет) это выглядело как пустая
+// страница, поэтому эффект убран: всё видно сразу, без анимации появления.
 
-if (!isDesktop()) {
-  const revealTargets = document.querySelectorAll(".section, .hero-inner");
-  revealTargets.forEach((el) => el.classList.add("reveal"));
+// ═══ Картинки для наведения грузим после основной страницы ═══════════════
+// У карточек есть вторые картинки (появляются при наведении). Им незачем
+// отнимать канал у первого экрана — подставляем их, когда страница загрузилась.
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("reveal-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  revealTargets.forEach((el) => observer.observe(el));
+function loadDeferredImages() {
+  document.querySelectorAll("img[data-lazy-src]").forEach((img) => {
+    img.src = img.dataset.lazySrc;
+    img.removeAttribute("data-lazy-src");
+  });
 }
+if (document.readyState === "complete") loadDeferredImages();
+else window.addEventListener("load", loadDeferredImages);
 
 // ═══ Подсветка активного пункта навигации при скролле (мобильный режим) ══
 // На десктопе активный пункт ставит goToSlide(); на мобильном слайдов как
