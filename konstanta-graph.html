@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Нити «Архива Константы»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Jura:wght@400;600&display=swap">
+<style>
+/* Звёздная карта книги: главы — звёзды на орбите, ружья и герои — светящиеся нити. Одна тёмная тема намеренно. */
+:root{
+  --bg:#0a0e1c; --bg2:#111731; --line:#232b4d; --fg:#e9e6dc; --muted:#8d93b3; --accent:#f5c542;
+  --p1:#6d7cff; --p2:#3fb6c9; --p3:#c77dff; --p4:#ff7a59;
+  --f-display:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Jura","Trebuchet MS",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:radial-gradient(1200px 800px at 50% 30%,#141b3a 0%,var(--bg) 60%) fixed,var(--bg);color:var(--fg);font-family:var(--f-ui);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1260px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+h1{font-family:var(--f-display);font-weight:600;font-size:clamp(28px,4.4vw,46px);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+.sub{color:var(--muted);margin:6px 0 0;max-width:64ch}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--bg2)}
+.seg button{all:unset;cursor:pointer;padding:6px 14px;border-radius:999px;font-family:var(--f-ui);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:22px;align-items:start}
+@media (max-width:920px){.main{grid-template-columns:minmax(0,1fr)}}
+.stage{position:relative;min-width:0}
+svg{display:block;width:100%;height:auto;max-width:100%}
+.edge{fill:none;stroke-linecap:round;mix-blend-mode:screen;transition:opacity .25s;cursor:pointer}
+.node{cursor:pointer}
+.node text{font-family:var(--f-ui);font-size:13px;fill:var(--muted);font-variant-numeric:tabular-nums;pointer-events:none}
+.node:hover text,.node.sel text{fill:var(--fg)}
+.focus .edge{opacity:.05!important}
+.focus .edge.on{opacity:.95!important}
+.focus .node{opacity:.35}
+.focus .node.on{opacity:1}
+.partlbl{font-family:var(--f-display);font-style:italic;font-size:17px;fill:var(--muted)}
+.partarc{fill:none;stroke-width:3;stroke-linecap:round;opacity:.8}
+aside{display:flex;flex-direction:column;gap:18px;min-width:0}
+.card{background:color-mix(in srgb,var(--bg2) 85%,transparent);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+.lgroup{display:flex;flex-direction:column;gap:6px}
+.lgroup + .lgroup{margin-top:12px}
+.ghead{all:unset;cursor:pointer;font-family:var(--f-display);font-style:italic;font-size:15px;color:var(--fg)}
+.ghead:hover{color:var(--accent)}
+.ghead:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.chip{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 8px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:600}
+.chip i{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
+.chip small{color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
+.chip.off{opacity:.35}
+.chip.off i{box-shadow:none}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mini{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.mini button{all:unset;cursor:pointer;font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.mini button:hover{color:var(--fg)}
+#info h2{font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1.15;margin:0 0 4px;text-wrap:balance}
+#info .meta{color:var(--muted);font-size:13px;margin-bottom:12px}
+#info ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+#info li{display:grid;grid-template-columns:12px minmax(0,1fr);gap:9px;align-items:baseline;font-size:13.5px;line-height:1.4}
+#info li i{width:10px;height:10px;border-radius:50%;display:block;transform:translateY(1px)}
+#info li b{font-weight:600}
+#info li span{color:var(--muted)}
+#info li em{font-style:normal;color:var(--fg)}
+#info .hint{color:var(--muted);font-size:13.5px;margin:0}
+.bridges{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.bridges button{all:unset;cursor:pointer;display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:baseline;width:100%;font-size:13.5px}
+.bridges .gap{font-family:var(--f-display);font-size:20px;font-variant-numeric:tabular-nums;text-align:right}
+.bridges .t{color:var(--muted)}
+.bridges .t b{color:var(--fg);font-weight:600}
+.bridges button:hover .t{color:var(--fg)}
+.bridges button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.foot{color:var(--muted);font-size:12.5px;max-width:84ch;margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Архив <em>«Константы»</em>: нити глав</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Что связывает главы">
+        <button id="m-guns" aria-pressed="true">Ружья</button>
+        <button id="m-heroes" aria-pressed="false">Герои</button>
+      </div>
+      <div class="seg" role="group" aria-label="Раскладка">
+        <button id="lay-circle" aria-pressed="true">Орбита</button>
+        <button id="lay-arc" aria-pressed="false">Линия</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stage"><svg id="g" role="img" aria-label="Граф связей между главами книги"></svg></div>
+    <aside>
+      <div class="card">
+        <p class="eyebrow" id="legend-title"></p>
+        <div id="legend"></div>
+        <div class="mini" id="mini"></div>
+      </div>
+      <div class="card" id="info"></div>
+      <div class="card">
+        <p class="eyebrow">Самые длинные мосты</p>
+        <ul class="bridges" id="bridges"></ul>
+      </div>
+    </aside>
+  </div>
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+const DATA = [{"n": 1, "title": "На расстоянии одного рывка", "len": 16040, "c": {"alan": 19, "vadim": 0, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 15, "maya": 14, "max": 25, "rita": 8, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 2, "title": "Тени «Аркаима»", "len": 4183, "c": {"alan": 0, "vadim": 0, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 6, "mihalych": 4, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 3, "title": "Вкус пепла и лжи", "len": 8088, "c": {"alan": 13, "vadim": 14, "yulya": 1, "andrey": 0, "albina": 0, "kostya": 20, "maya": 0, "max": 4, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 4, "title": "Заключённый клетки Фарадея", "len": 21975, "c": {"alan": 49, "vadim": 11, "yulya": 19, "andrey": 0, "albina": 0, "kostya": 13, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 5, "title": "Тишина как признак беды", "len": 8224, "c": {"alan": 8, "vadim": 5, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 18, "maya": 10, "max": 10, "rita": 8, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 6, "title": "Пылесос для лазутчиков", "len": 23547, "c": {"alan": 70, "vadim": 4, "yulya": 6, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 3, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 5, "vorontsov": 0}}, {"n": 7, "title": "Один клик — и ты курсант", "len": 10270, "c": {"alan": 22, "vadim": 20, "yulya": 3, "andrey": 0, "albina": 0, "kostya": 1, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 1, "vorontsov": 0}}, {"n": 8, "title": "Не привязывайся", "len": 2850, "c": {"alan": 0, "vadim": 10, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 4, "vorontsov": 3}}, {"n": 9, "title": "Новый день и новые реальности", "len": 7588, "c": {"alan": 22, "vadim": 22, "yulya": 1, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 2, "mihalych": 1, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 10, "title": "Нейросфера на минималках", "len": 18220, "c": {"alan": 42, "vadim": 43, "yulya": 8, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 11, "title": "Откуда берутся тестировщики", "len": 18936, "c": {"alan": 53, "vadim": 29, "yulya": 4, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 12, "title": "Ботинки под соусом из багов", "len": 9398, "c": {"alan": 33, "vadim": 3, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 10, "panov": 0, "vorontsov": 0}}, {"n": 13, "title": "Экскурсия на виртуальную помойку", "len": 25107, "c": {"alan": 62, "vadim": 50, "yulya": 8, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 10, "panov": 0, "vorontsov": 0}}, {"n": 14, "title": "Метод научного тыка напополам", "len": 12758, "c": {"alan": 29, "vadim": 7, "yulya": 2, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 13, "mihalych": 12, "vladimir": 0, "okulus": 3, "panov": 0, "vorontsov": 0}}, {"n": 15, "title": "Слоёный пирог из радиомагии", "len": 16245, "c": {"alan": 46, "vadim": 1, "yulya": 4, "andrey": 1, "albina": 0, "kostya": 6, "maya": 0, "max": 0, "rita": 0, "seryoga": 14, "mihalych": 8, "vladimir": 0, "okulus": 13, "panov": 0, "vorontsov": 0}}, {"n": 16, "title": "Всё ещё друзья?", "len": 7334, "c": {"alan": 6, "vadim": 4, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 21, "maya": 21, "max": 3, "rita": 4, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 17, "title": "Зацепки и призраки", "len": 30182, "c": {"alan": 80, "vadim": 35, "yulya": 8, "andrey": 0, "albina": 0, "kostya": 4, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 3, "panov": 0, "vorontsov": 0}}, {"n": 18, "title": "Проблемы дресс-кода", "len": 23849, "c": {"alan": 62, "vadim": 4, "yulya": 2, "andrey": 0, "albina": 0, "kostya": 10, "maya": 8, "max": 1, "rita": 0, "seryoga": 27, "mihalych": 19, "vladimir": 3, "okulus": 3, "panov": 0, "vorontsov": 0}}, {"n": 19, "title": "Сосисочная криптография", "len": 12726, "c": {"alan": 29, "vadim": 1, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 24, "panov": 0, "vorontsov": 0}}, {"n": 20, "title": "Бесконечная рекурсия притяжения", "len": 23999, "c": {"alan": 64, "vadim": 6, "yulya": 1, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 28, "panov": 0, "vorontsov": 0}}, {"n": 21, "title": "Теорема о предательстве", "len": 18020, "c": {"alan": 50, "vadim": 44, "yulya": 14, "andrey": 0, "albina": 0, "kostya": 3, "maya": 1, "max": 0, "rita": 0, "seryoga": 1, "mihalych": 1, "vladimir": 0, "okulus": 8, "panov": 0, "vorontsov": 0}}, {"n": 22, "title": "Пустота", "len": 6647, "c": {"alan": 19, "vadim": 3, "yulya": 4, "andrey": 0, "albina": 0, "kostya": 3, "maya": 1, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 1, "panov": 0, "vorontsov": 0}}, {"n": 23, "title": "Южный КПП", "len": 21146, "c": {"alan": 44, "vadim": 4, "yulya": 2, "andrey": 0, "albina": 0, "kostya": 32, "maya": 30, "max": 0, "rita": 0, "seryoga": 1, "mihalych": 1, "vladimir": 5, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 24, "title": "Золотая клетка", "len": 3811, "c": {"alan": 2, "vadim": 0, "yulya": 1, "andrey": 8, "albina": 8, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 2}}, {"n": 25, "title": "Ищи, где тебе врут", "len": 8336, "c": {"alan": 28, "vadim": 13, "yulya": 3, "andrey": 0, "albina": 0, "kostya": 1, "maya": 1, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 1, "vladimir": 0, "okulus": 5, "panov": 0, "vorontsov": 0}}, {"n": 26, "title": "Исследовательский подход", "len": 22276, "c": {"alan": 57, "vadim": 32, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 1, "mihalych": 1, "vladimir": 0, "okulus": 16, "panov": 0, "vorontsov": 0}}, {"n": 27, "title": "Зажать плотнее", "len": 1546, "c": {"alan": 0, "vadim": 7, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 28, "title": "Разговор на кухне", "len": 8127, "c": {"alan": 8, "vadim": 5, "yulya": 1, "andrey": 0, "albina": 0, "kostya": 14, "maya": 20, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 29, "title": "Шайтан-машина", "len": 12013, "c": {"alan": 21, "vadim": 1, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 19, "mihalych": 14, "vladimir": 3, "okulus": 2, "panov": 0, "vorontsov": 0}}, {"n": 30, "title": "На одной волне с призраком", "len": 28402, "c": {"alan": 89, "vadim": 41, "yulya": 17, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 4, "panov": 0, "vorontsov": 0}}, {"n": 31, "title": "По ту сторону", "len": 6107, "c": {"alan": 8, "vadim": 2, "yulya": 4, "andrey": 4, "albina": 21, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 3}}, {"n": 32, "title": "Володька и Окулус", "len": 10244, "c": {"alan": 23, "vadim": 4, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 1, "maya": 1, "max": 0, "rita": 0, "seryoga": 2, "mihalych": 4, "vladimir": 9, "okulus": 15, "panov": 0, "vorontsov": 0}}, {"n": 33, "title": "Вечер в гараже и «хэндшейки»", "len": 10075, "c": {"alan": 5, "vadim": 0, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 14, "maya": 13, "max": 22, "rita": 7, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 34, "title": "Радиопоиски", "len": 21741, "c": {"alan": 62, "vadim": 1, "yulya": 2, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 3, "mihalych": 4, "vladimir": 0, "okulus": 28, "panov": 0, "vorontsov": 0}}, {"n": 35, "title": "Чек-лист для побега", "len": 9253, "c": {"alan": 24, "vadim": 5, "yulya": 8, "andrey": 0, "albina": 0, "kostya": 2, "maya": 1, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 1, "vladimir": 0, "okulus": 2, "panov": 0, "vorontsov": 0}}, {"n": 36, "title": "Не баг, а фича", "len": 24338, "c": {"alan": 65, "vadim": 14, "yulya": 16, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 3, "panov": 0, "vorontsov": 0}}, {"n": 37, "title": "Ложноположительный результат", "len": 11717, "c": {"alan": 7, "vadim": 14, "yulya": 1, "andrey": 7, "albina": 11, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 17, "vorontsov": 4}}, {"n": 38, "title": "Прикинуться ветошью", "len": 24667, "c": {"alan": 47, "vadim": 17, "yulya": 2, "andrey": 0, "albina": 0, "kostya": 0, "maya": 4, "max": 0, "rita": 0, "seryoga": 45, "mihalych": 14, "vladimir": 9, "okulus": 1, "panov": 0, "vorontsov": 0}}, {"n": 39, "title": "Упаковка паники", "len": 3540, "c": {"alan": 5, "vadim": 0, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 9, "maya": 12, "max": 7, "rita": 5, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 40, "title": "Перевёрнутый мир", "len": 10767, "c": {"alan": 17, "vadim": 4, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 21, "maya": 15, "max": 11, "rita": 10, "seryoga": 12, "mihalych": 1, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 41, "title": "Племянник", "len": 12853, "c": {"alan": 4, "vadim": 15, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 46, "maya": 7, "max": 9, "rita": 7, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 0, "vorontsov": 0}}, {"n": 42, "title": "Непятизвёздочный отель", "len": 18992, "c": {"alan": 37, "vadim": 2, "yulya": 1, "andrey": 5, "albina": 0, "kostya": 0, "maya": 19, "max": 0, "rita": 0, "seryoga": 31, "mihalych": 3, "vladimir": 17, "okulus": 2, "panov": 0, "vorontsov": 0}}, {"n": 43, "title": "Туз в рукаве", "len": 12078, "c": {"alan": 22, "vadim": 13, "yulya": 0, "andrey": 1, "albina": 0, "kostya": 2, "maya": 12, "max": 0, "rita": 1, "seryoga": 13, "mihalych": 0, "vladimir": 1, "okulus": 0, "panov": 14, "vorontsov": 4}}, {"n": 44, "title": "Таблетки для амнезии", "len": 16255, "c": {"alan": 49, "vadim": 8, "yulya": 10, "andrey": 1, "albina": 1, "kostya": 1, "maya": 7, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 2, "vorontsov": 5}}, {"n": 45, "title": "Три минуты", "len": 3072, "c": {"alan": 0, "vadim": 13, "yulya": 0, "andrey": 0, "albina": 0, "kostya": 0, "maya": 0, "max": 0, "rita": 0, "seryoga": 0, "mihalych": 0, "vladimir": 0, "okulus": 0, "panov": 1, "vorontsov": 0}}, {"n": 46, "title": "Эпилог", "len": 4600, "c": {"alan": 17, "vadim": 3, "yulya": 2, "andrey": 0, "albina": 0, "kostya": 2, "maya": 5, "max": 3, "rita": 2, "seryoga": 0, "mihalych": 1, "vladimir": 1, "okulus": 0, "panov": 1, "vorontsov": 2}}];
+const GROUPS = [
+  {id:"key",name:"Ключ к архиву"},
+  {id:"lie",name:"Ложь и правда"},
+  {id:"run",name:"Побег"},
+  {id:"big",name:"Большая игра"},
+];
+const THREADS = [
+  {id:"radio",g:"key",name:"Дедушкино радио",color:"#f5c542",chain:[
+    [6,"писк в ушах — «так скулило дедушкино радио»"],[20,"туннель воспоминаний: Алан паяет дедушкино радио"],[30,"образ радио — вещь из семьи"],[32,"«вот что нужно найти»"],[34,"радио найдено, архив внутри уходит на ключ-карту"],[35,"вспоминает, как в семь лет чинили его с папой"],[36,"радио ложится у двери"],[37,"Альбина видит, как сын выкладывает вещи"]]},
+  {id:"puzzle",g:"key",name:"Юлина головоломка",color:"#fde68a",chain:[
+    [13,"находит на свалке; Вадим: «стандартная, всем выдают»"],[17,"по ней триангулирует дверь"],[30,"призрак указывает на неё"],[31,"агент выбрасывает её на глазах Альбины; на ободах — частоты «Млечного пути»"],[35,"в инвентаре"],[36,"у двери"],[37,"у двери глазами Альбины"]]},
+  {id:"bee",g:"key",name:"Заколка-пчёлка",color:"#fb923c",chain:[
+    [20,"вплетена в буквы"],[21,"скопирована на ключ-карту"],[25,"мамина заколка цела, а часы разбиты"],[30,"рядом с отвёрткой на карте"],[35,"в инвентаре"],[36,"у двери"],[37,"у двери глазами Альбины"]]},
+  {id:"screw",g:"key",name:"Папина отвёртка",color:"#d9822b",chain:[
+    [30,"в багажнике универсала"],[35,"в инвентаре"],[36,"«движения жёлто-чёрной отвёртки» — тот вечер"],[37,"у двери глазами Альбины"]]},
+  {id:"car",g:"key",name:"Универсал с вмятиной",color:"#f97316",chain:[
+    [17,"на Магнитной горе — папин универсал с вмятиной"],[20,"летит к горе с Окулусом"],[21,"рассказывает Вадиму"],[22,"кошмар: гора глотает машину с родителями"],[25,"надо проверить багажник"],[26,"вылазка срывается"],[30,"багажник открыт"],[31,"Альбина: «машину грохнули на Магнитную гору»"],[42,"вмятина на левом крыле — пароль для звонка папе"]]},
+  {id:"milky",g:"key",name:"«Млечный путь»",color:"#fff1c1",chain:[
+    [30,"передача в магнитоле машины"],[31,"любимая передача Юли"],[32,"рассказывает про передачу"],[34,"позывные диктора складываются в пароль"]]},
+  {id:"pass",g:"key",name:"Пароль «Первый шаг»",color:"#facc15",chain:[
+    [10,"Юля: «пароль на ключ-карте, алгоритм папы»"],[15,"папин алгоритм шифрования"],[34,"расшифровано: «Первый шаг»"],[35,"понял, где дверь"],[36,"слова отца после сгоревшей платы"],[37,"Альбина слышит пароль"],[44,"Юля: «сменила пароль на семейное воспоминание»"]]},
+  {id:"note",g:"key",name:"Блокнот",color:"#e7c9a0",chain:[
+    [12,"бумажный блокнот в шкафчике"],[26,"фонарик и блокнот"],[30,"«ТЫ — ЮЛЯ?»"],[31,"та же сцена глазами Альбины"],[34,"подбирает блокнот — улику"]]},
+  {id:"clock",g:"key",name:"Часы и фото Вадима с Юлей",color:"#c2a26b",chain:[
+    [21,"Вадим нашёл разбитые часы"],[25,"разбитые часы — Юлин знак, что время их любви остановилось"],[30,"часы и фото рядом с семейными вещами"],[31,"Альбина отбрасывает их как чужие"]]},
+
+  {id:"sim",g:"lie",name:"Сим-карта",color:"#ef4444",chain:[
+    [4,"Вадим велит выбросить сим-карту"],[22,"на распечатке старый номер"],[25,"«Ну конечно же: сим-карта!»"],[30,"хочет выкрикнуть Вадиму, что всё знает"],[42,"«какой же я был дурак»"],[44,"первая ложь: мобильная вышка О.С.И.Р.И.С."]]},
+  {id:"bill",g:"lie",name:"Распечатка звонков",color:"#fb7185",chain:[
+    [21,"Вадим приносит биллинги: родители не звонили"],[22,"распечатка выпадает из рук"],[23,"показывает друзьям; «Как они позвонят? С ботинка?»"],[25,"«зачем он принёс эту выписку?»"]]},
+  {id:"ghost",g:"lie",name:"Призраки",color:"#f472b6",chain:[
+    [17,"Вадим стреляет в «призрака»"],[27,"Полковник: призраков стало слишком много"],[30,"призрак у машины, Вадим стреляет"],[31,"призраки — правительственные агенты, среди них Альбина"],[32,"карантин после атаки призраков"],[35,"вспоминает, как призрак указывал на вещи"],[36,"призраки пробились снова"],[37,"агенты транслируют сцену у двери"],[44,"Юля: «мы подозревали, что это мама с папой»"]]},
+  {id:"okulus",g:"lie",name:"Окулус",color:"#e879f9",chain:[
+    [12,"пончик превращается в ботинки"],[13,"рассказывает Вадиму про пончик"],[21,"странный сбой Окулуса в конце занятия"],[25,"«вчера Окулус странно заглючил»"],[42,"«ботинки вместо пончиков»"]]},
+  {id:"enrol",g:"lie",name:"Зачисление",color:"#fda4af",chain:[
+    [11,"«Зачисление одобрено. Условно»"],[24,"родители получают бумагу «Зачислен»"],[46,"Воронцов предлагает работу"]]},
+
+  {id:"duct",g:"run",name:"Фальшкоридор и плед",color:"#34d399",chain:[
+    [4,"прячется над серверной; старый клетчатый плед"],[6,"жара: его выкуривают"],[7,"после трёх суток на композитных плитах"],[13,"дежавю: такой же корпус"],[22,"«жара и голод в фальшкоридоре»"],[36,"Юлина комната — тот самый фальшкоридор и тот самый плед"],[38,"страх, что запрут в серверной"],[44,"в бреду снова в фальшкоридоре"]]},
+  {id:"band",g:"run",name:"Браслет-маяк",color:"#2dd4bf",chain:[
+    [11,"выдают браслет"],[17,"«один браслет — один профиль»"],[35,"снять перед побегом"],[38,"Михалыч срывает: «это маяк»"],[44,"«сам привязал себя к Аркаиму»"]]},
+  {id:"rag",g:"run",name:"Ветошь и фургон Серёги",color:"#a3e635",chain:[
+    [2,"Серёга оттирает руки ветошью"],[9,"ветошь в кармане комбеза"],[14,"Серёгу обязали вывозить ветошь на своём фургоне"],[34,"завтра вывоз ветоши"],[38,"Алана прячут в ящик с ветошью"],[40,"мазут от ветоши на лице"]]},
+  {id:"doc",g:"run",name:"Авто-док",color:"#86efac",chain:[
+    [29,"«шайтан-машина» появляется в корпусе"],[38,"заплатка на рёбра"],[40,"Майя видит заплатку"],[42,"заплатка авто-дока"],[43,"Вадим видит заплатку"],[44,"папа вспоминает заплатку"],[45,"«ломаешь рёбра и оставляешь умирать»"]]},
+  {id:"bridge",g:"run",name:"Радиомост",color:"#5eead4",chain:[
+    [15,"Серёгина программка для рации"],[16,"Майя пишет код 2683"],[22,"«забудьте» уходит радиопакетом"],[23,"программка перехватывает сообщение"],[42,"включить Радиомост на минуту; левая симка"]]},
+  {id:"bruise",g:"run",name:"Синяк Вадима",color:"#bef264",chain:[
+    [38,"удар в скулу в серверной"],[41,"Костя видит свежий синяк"],[43,"багровый синяк при штурме"],[45,"синяк почти сошёл"]]},
+  {id:"eject",g:"run",name:"Аварийный выброс",color:"#6ee7b7",chain:[
+    [17,"Вадим предупреждает о выбросе"],[18,"выброс случился"],[21,"«едва не сжёг нейроны»"],[29,"узнаёт таблетки после выброса"]]},
+
+  {id:"const",g:"big",name:"«Константа» и вышки",color:"#60a5fa",chain:[
+    [2,"«Константа» возвращается"],[3,"завтра садится, на борту Юля"],[6,"телеметрия отвалилась, «Протокол изоляции»"],[10,"Юлино послание: архив спрятан"],[18,"замолчала вышка ретранслятора"],[21,"Вадим: экспедиция, пробы грунта"],[36,"архив: вышки излучают"],[38,"Владимир: «он вскрыл архив»"],[42,"видео во всех новостях, корабль на подлёте"],[44,"«Константа» на орбите, экипаж в карантине"],[46,"космонавты обесточили вышки"]]},
+  {id:"attach",g:"big",name:"«Не привязывайся»",color:"#a78bfa",chain:[
+    [8,"Полковник: «Не привязывайся»"],[27,"Вадим каждый вечер шлёт отчёт"],[45,"«Ты меня не услышал»"]]},
+  {id:"panov",g:"big",name:"Панов: допрос — штурм",color:"#94a3b8",chain:[
+    [6,"Панов вытаскивает Алана"],[8,"«Панов давил»"],[37,"Панов и Вадим у гермодвери"],[43,"штурм гаража"],[45,"группа ехала на три минуты дольше"]]},
+  {id:"uncle",g:"big",name:"Дядя Вадим",color:"#818cf8",chain:[
+    [3,"«Привет, дядь Вадим»"],[5,"угроза: отвечать будет вся семья"],[16,"«дядя так и не вернулся с базы?»"],[40,"«Это Северов сделал, Кость. Твой дядя»"],[41,"ночной перехват — племянник"]]},
+];
+
+const CHARS = [
+  {id:"alan",name:"Алан",color:"#f5c542"},
+  {id:"vadim",name:"Вадим",color:"#ff5a36"},
+  {id:"yulya",name:"Юля",color:"#a78bfa"},
+  {id:"andrey",name:"Андрей",color:"#22d3ee"},
+  {id:"albina",name:"Альбина",color:"#99f6e4"},
+  {id:"kostya",name:"Костя",color:"#f472b6"},
+  {id:"maya",name:"Майя",color:"#a3e635"},
+  {id:"max",name:"Макс",color:"#fb923c"},
+  {id:"rita",name:"Рита",color:"#e879f9"},
+  {id:"seryoga",name:"Серёга",color:"#34d399"},
+  {id:"mihalych",name:"Михалыч",color:"#d6b88a"},
+  {id:"vladimir",name:"Владимир",color:"#60a5fa"},
+  {id:"okulus",name:"Окулус",color:"#c084fc"},
+  {id:"panov",name:"Панов",color:"#94a3b8"},
+  {id:"vorontsov",name:"Воронцов",color:"#f1f5f9"},
+];
+const PARTS = [
+  {name:"Авантюрист",from:1,to:8,color:"var(--p1)"},
+  {name:"Курсант",from:9,to:23,color:"var(--p2)"},
+  {name:"Тестировщик",from:24,to:37,color:"var(--p3)"},
+  {name:"Диверсант",from:38,to:46,color:"var(--p4)"},
+];
+const TH = 3;
+const partOf = n => PARTS.findIndex(p=>n>=p.from&&n<=p.to);
+const byN = Object.fromEntries(DATA.map(d=>[d.n,d]));
+
+// ---------- два набора нитей ----------
+function buildGuns(){
+  const edges=[], notes={};
+  for(const t of THREADS){
+    t.chain.forEach(([n,txt],i)=>{
+      (notes[n] ||= []).push({t,txt,prev:t.chain[i-1]?.[0],next:t.chain[i+1]?.[0]});
+      if(i>0) edges.push({a:t.chain[i-1][0],b:n,id:t.id,na:t.chain[i-1][1],nb:txt});
+    });
+  }
+  return {edges,notes,items:THREADS,meta:Object.fromEntries(THREADS.map(t=>[t.id,t]))};
+}
+function buildHeroes(){
+  const edges=[];
+  for(const c of CHARS){
+    let prev=null;
+    for(const d of DATA){
+      if(d.c[c.id]>=TH){ if(prev) edges.push({a:prev.n,b:d.n,id:c.id,w:Math.min(prev.c[c.id],d.c[c.id])}); prev=d; }
+    }
+  }
+  return {edges,items:CHARS,meta:Object.fromEntries(CHARS.map(c=>[c.id,c]))};
+}
+const MODES={guns:buildGuns(),heroes:buildHeroes()};
+for(const m of Object.values(MODES)){
+  const groups={};
+  for(const e of m.edges){ (groups[e.a+"-"+e.b] ||= []).push(e); }
+  for(const k in groups) groups[k].forEach((e,i)=>{e.i=i;e.k=groups[k].length;});
+}
+
+const TEXT={
+  guns:{sub:"46 глав — звёзды на орбите. Нить ведёт от главы, где ружьё повесили, к главе, где оно снова появилось или выстрелило. Соседние главы связаны дугой по ободу.",
+        legend:"Ружья и события · нажми, чтобы скрыть",
+        hint:"Наведи на главу: справа появится, какие ружья в ней висят и куда стреляют. Клик закрепляет выбор, клик по нити показывает одну связь.",
+        foot:"Нити собраны вручную по финальным файлам глав: предмет или событие, которое появляется и потом возвращается или срабатывает. Подписи к главам — что именно с ним происходит в этой главе."},
+  heroes:{sub:"46 глав — звёзды на орбите. Нить соединяет две главы, если герой есть в обеих, а между ними не появляется. Толщина — сколько раз герой упомянут.",
+        legend:"Персонажи · нажми, чтобы скрыть",
+        hint:"Наведи на главу, чтобы увидеть, откуда и куда тянутся нити её героев. Клик закрепляет выбор.",
+        foot:"Герой «есть» в главе, если его имя встречается там хотя бы трижды в любом падеже («Володька» считается Владимиром, «Стрекоза» — Майей). Это упоминания, а не сцены."}
+};
+
+let mode="guns", layout="circle", pinned=null;
+const hidden={guns:new Set(),heroes:new Set()};
+const svg=document.getElementById("g");
+const info=document.getElementById("info");
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const M=()=>MODES[mode];
+const H=()=>hidden[mode];
+const f1=x=>x.toFixed(1);
+
+function positions(){
+  const pos={};
+  if(layout==="circle"){
+    const cx=500,cy=500,R=380,gap=1.6;
+    const slots=DATA.length+PARTS.length*gap;
+    let s=gap/2;
+    DATA.forEach((d,i)=>{
+      if(i>0 && partOf(d.n)!==partOf(DATA[i-1].n)) s+=gap;
+      const a=-Math.PI/2+(s/slots)*Math.PI*2;
+      pos[d.n]={x:cx+R*Math.cos(a),y:cy+R*Math.sin(a),a};
+      s+=1;
+    });
+    return {pos,vb:"0 0 1000 1000",cx,cy,R};
+  }
+  const W=1400,L=40,y=430;let x=L;const step=(W-2*L-3*22)/(DATA.length-1);
+  DATA.forEach((d,i)=>{ if(i>0 && partOf(d.n)!==partOf(DATA[i-1].n)) x+=22; pos[d.n]={x,y}; x+=step; });
+  return {pos,vb:`0 0 ${W} 520`,y};
+}
+
+function edgePath(e,P){
+  const p1=P.pos[e.a],p2=P.pos[e.b];
+  const off=e.i-(e.k-1)/2;
+  if(layout==="circle"){
+    if(e.b-e.a===1){
+      // соседние главы — по ободу; параллельные нити ложатся концентрически внутрь
+      const r=P.R-e.i*5.5;
+      const q1={x:P.cx+r*Math.cos(p1.a),y:P.cy+r*Math.sin(p1.a)}, q2={x:P.cx+r*Math.cos(p2.a),y:P.cy+r*Math.sin(p2.a)};
+      return `M${f1(p1.x)},${f1(p1.y)} L${f1(q1.x)},${f1(q1.y)} A${f1(r)},${f1(r)} 0 0 1 ${f1(q2.x)},${f1(q2.y)} L${f1(p2.x)},${f1(p2.y)}`;
+    }
+    const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2;
+    const t=0.38+0.5*Math.min(1,(e.b-e.a)/23);
+    let qx=mx+(P.cx-mx)*t,qy=my+(P.cy-my)*t;
+    const dx=p2.x-p1.x,dy=p2.y-p1.y,len=Math.hypot(dx,dy)||1;
+    qx+=(-dy/len)*off*14+(P.cx-mx)*off*0.05;
+    qy+=( dx/len)*off*14+(P.cy-my)*off*0.05;
+    return `M${f1(p1.x)},${f1(p1.y)} Q${f1(qx)},${f1(qy)} ${f1(p2.x)},${f1(p2.y)}`;
+  }
+  const dx=p2.x-p1.x;
+  const h=16+e.i*7+Math.pow(dx,0.86)*0.55;
+  return `M${f1(p1.x)},${P.y} C${f1(p1.x)},${f1(P.y-h)} ${f1(p2.x)},${f1(P.y-h)} ${f1(p2.x)},${P.y}`;
+}
+
+function render(){
+  const P=positions(), m=M();
+  svg.setAttribute("viewBox",P.vb);
+  svg.innerHTML="";
+  const defs=el("defs",{},svg);
+  const f=el("filter",{id:"glow",x:"-50%",y:"-50%",width:"200%",height:"200%"},defs);
+  el("feGaussianBlur",{stdDeviation:"2",result:"b"},f);
+  const mg=el("feMerge",{},f);el("feMergeNode",{in:"b"},mg);el("feMergeNode",{in:"SourceGraphic"},mg);
+
+  const dust=el("g",{opacity:.5},svg);
+  const [, , VW, VH]=P.vb.split(" ").map(Number);
+  let seed=7;const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+  for(let i=0;i<140;i++) el("circle",{cx:f1(rnd()*VW),cy:f1(rnd()*VH),r:(rnd()*1.1+.2).toFixed(2),fill:"#c9cff5",opacity:(rnd()*.6+.1).toFixed(2)},dust);
+
+  const pg=el("g",{},svg);
+  PARTS.forEach(p=>{
+    const a=P.pos[p.from],b=P.pos[p.to];
+    if(layout==="circle"){
+      const r=P.R+46,a1=a.a-0.03,a2=b.a+0.03;
+      el("path",{d:`M${f1(P.cx+r*Math.cos(a1))},${f1(P.cy+r*Math.sin(a1))} A${r},${r} 0 ${a2-a1>Math.PI?1:0} 1 ${f1(P.cx+r*Math.cos(a2))},${f1(P.cy+r*Math.sin(a2))}`,class:"partarc",stroke:p.color},pg);
+      const am=(a1+a2)/2,rl=r+26;
+      el("text",{x:f1(P.cx+rl*Math.cos(am)),y:f1(P.cy+rl*Math.sin(am)),"text-anchor":"middle","dominant-baseline":"middle",class:"partlbl"},pg).textContent=p.name;
+    } else {
+      el("path",{d:`M${a.x-6},${P.y+38} L${b.x+6},${P.y+38}`,class:"partarc",stroke:p.color},pg);
+      el("text",{x:(a.x+b.x)/2,y:P.y+66,"text-anchor":"middle",class:"partlbl"},pg).textContent=p.name;
+    }
+  });
+
+  const eg=el("g",{filter:"url(#glow)"},svg);
+  const ordered=[...m.edges].sort((x,y)=>(x.id==="alan"?0:1)-(y.id==="alan"?0:1));
+  for(const e of ordered){
+    if(H().has(e.id)) continue;
+    const it=m.meta[e.id];
+    const w=mode==="heroes"?0.8+Math.sqrt(e.w)*0.42:2.1;
+    const p=el("path",{d:edgePath(e,P),class:"edge",stroke:it.color,"stroke-width":w.toFixed(2),opacity:(e.id==="alan"?.38:.66)},eg);
+    p._e=e;
+    el("title",{},p).textContent=`${it.name}: гл. ${e.a} → гл. ${e.b}`;
+    p.addEventListener("click",ev=>{ev.stopPropagation();focusEdge(e);});
+  }
+
+  const ng=el("g",{},svg);
+  for(const d of DATA){
+    const p=P.pos[d.n];
+    const g=el("g",{class:"node",tabindex:0,"data-n":d.n,role:"button","aria-label":`Глава ${d.n}. ${d.title}`},ng);
+    const r=3.4+Math.sqrt(d.len/1000)*0.95;
+    const col=PARTS[partOf(d.n)].color;
+    el("circle",{cx:f1(p.x),cy:f1(p.y),r:f1(r+5),fill:col,opacity:.18},g);
+    el("circle",{cx:f1(p.x),cy:f1(p.y),r:f1(r),fill:"#fffaf0",stroke:col,"stroke-width":2},g);
+    let tx,ty;
+    if(layout==="circle"){const rl=P.R+22;tx=P.cx+rl*Math.cos(p.a);ty=P.cy+rl*Math.sin(p.a);} else {tx=p.x;ty=P.y+22;}
+    el("text",{x:f1(tx),y:f1(ty),"text-anchor":"middle","dominant-baseline":"middle"},g).textContent=d.n;
+    g.addEventListener("mouseenter",()=>{if(!pinned)focusNode(d.n)});
+    g.addEventListener("mouseleave",()=>{if(!pinned)clearFocus()});
+    g.addEventListener("click",ev=>{ev.stopPropagation();pinned=(pinned===d.n?null:d.n);if(pinned)focusNode(d.n);else clearFocus();});
+    g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();g.dispatchEvent(new MouseEvent("click"));}});
+  }
+  if(pinned) focusNode(pinned); else clearFocus();
+}
+
+function setFocus(test,nodes){
+  svg.classList.add("focus");
+  svg.querySelectorAll(".edge").forEach(p=>p.classList.toggle("on",test(p._e)));
+  svg.querySelectorAll(".node").forEach(g=>{const n=+g.dataset.n;g.classList.toggle("on",nodes.has(n));g.classList.toggle("sel",nodes.has(n));});
+}
+function clearFocus(){
+  svg.classList.remove("focus");
+  svg.querySelectorAll(".on,.sel").forEach(x=>x.classList.remove("on","sel"));
+  info.innerHTML=`<p class="hint">${TEXT[mode].hint}</p>`;
+}
+const head=n=>`<p class="eyebrow">Часть ${partOf(n)+1} · ${PARTS[partOf(n)].name}</p><h2>${n}. ${byN[n].title}</h2>`;
+
+function focusNode(n){
+  const m=M(), nodes=new Set([n]);
+  m.edges.forEach(e=>{if(!H().has(e.id)&&(e.a===n||e.b===n)){nodes.add(e.a);nodes.add(e.b);}});
+  setFocus(e=>e.a===n||e.b===n,nodes);
+  let rows="";
+  if(mode==="guns"){
+    rows=(m.notes[n]||[]).filter(x=>!H().has(x.t.id)).map(x=>{
+      const from=x.prev?`из гл. ${x.prev}`:"повешено здесь", to=x.next?`в гл. ${x.next}`:"финал нити";
+      return `<li><i style="background:${x.t.color}"></i><div><b>${x.t.name}</b> <span>· ${from} → ${to}</span><br><em>${x.txt}</em></div></li>`;
+    }).join("");
+  } else {
+    const d=byN[n];
+    rows=CHARS.filter(c=>d.c[c.id]>=TH&&!H().has(c.id)).sort((x,y)=>d.c[y.id]-d.c[x.id]).map(c=>{
+      const inE=m.edges.find(e=>e.id===c.id&&e.b===n), outE=m.edges.find(e=>e.id===c.id&&e.a===n);
+      return `<li><i style="background:${c.color}"></i><div><b>${c.name}</b> <span>· ${d.c[c.id]} упом. · ${inE?`из гл. ${inE.a}`:"впервые"} → ${outE?`в гл. ${outE.b}`:"дальше нет"}</span></div></li>`;
+    }).join("");
+  }
+  info.innerHTML=head(n)+`<div class="meta">${(byN[n].len/1000).toFixed(1)} тыс. знаков</div>`+(rows?`<ul>${rows}</ul>`:`<p class="hint">${mode==="guns"?"Здесь ружья не висят и не стреляют.":"Видимых героев здесь нет."}</p>`);
+}
+function focusEdge(e){
+  pinned=null;
+  const it=M().meta[e.id];
+  setFocus(x=>x===e,new Set([e.a,e.b]));
+  const na=e.na?`<br><em>${e.na}</em>`:"", nb=e.nb?`<br><em>${e.nb}</em>`:"";
+  info.innerHTML=`<p class="eyebrow">${e.b-e.a===1?"Соседние главы":`Мост через ${e.b-e.a-1} гл.`}</p><h2>${it.name}</h2><div class="meta">гл. ${e.a} → гл. ${e.b}</div><ul>
+  <li><i style="background:${it.color}"></i><div><b>${e.a}. ${byN[e.a].title}</b>${na}</div></li>
+  <li><i style="background:${it.color}"></i><div><b>${e.b}. ${byN[e.b].title}</b>${nb}</div></li></ul>`;
+}
+svg.addEventListener("click",()=>{pinned=null;clearFocus();});
+
+// ---------- легенда ----------
+const legend=document.getElementById("legend"), mini=document.getElementById("mini");
+function chip(it,count){
+  const b=document.createElement("button");
+  b.className="chip"+(H().has(it.id)?" off":"");
+  b.style.color=it.color;
+  b.setAttribute("aria-pressed",String(!H().has(it.id)));
+  b.innerHTML=`<i style="background:${it.color}"></i><span style="color:var(--fg)">${it.name}</span><small>${count}</small>`;
+  b.title=`${it.name}: ${count} гл.`;
+  b.addEventListener("click",()=>{H().has(it.id)?H().delete(it.id):H().add(it.id);pinned=null;drawLegend();render();});
+  b.addEventListener("mouseenter",()=>{if(H().has(it.id)||pinned)return;
+    const ns=new Set();M().edges.forEach(e=>{if(e.id===it.id){ns.add(e.a);ns.add(e.b);}});setFocus(e=>e.id===it.id,ns);});
+  b.addEventListener("mouseleave",()=>{if(!pinned)clearFocus();});
+  return b;
+}
+function drawLegend(){
+  document.getElementById("legend-title").textContent=TEXT[mode].legend;
+  legend.innerHTML="";mini.innerHTML="";
+  if(mode==="guns"){
+    for(const g of GROUPS){
+      const box=document.createElement("div");box.className="lgroup";
+      const hd=document.createElement("button");hd.className="ghead";hd.textContent=g.name;
+      const ids=THREADS.filter(t=>t.g===g.id).map(t=>t.id);
+      hd.title="Показать или скрыть всю группу";
+      hd.addEventListener("click",()=>{const allOn=ids.every(id=>!H().has(id));ids.forEach(id=>allOn?H().add(id):H().delete(id));pinned=null;drawLegend();render();});
+      box.appendChild(hd);
+      const row=document.createElement("div");row.className="legend";
+      THREADS.filter(t=>t.g===g.id).forEach(t=>row.appendChild(chip(t,t.chain.length)));
+      box.appendChild(row);legend.appendChild(box);
+    }
+    GROUPS.forEach(g=>{const b=document.createElement("button");b.textContent="только "+g.name.toLowerCase();
+      b.onclick=()=>{H().clear();THREADS.forEach(t=>{if(t.g!==g.id)H().add(t.id)});pinned=null;drawLegend();render();};mini.appendChild(b);});
+  } else {
+    const row=document.createElement("div");row.className="legend";
+    CHARS.forEach(c=>row.appendChild(chip(c,DATA.filter(d=>d.c[c.id]>=TH).length)));
+    legend.appendChild(row);
+    const b=document.createElement("button");b.textContent="все, кроме Алана";b.onclick=()=>{H().clear();H().add("alan");drawLegend();render();};mini.appendChild(b);
+  }
+  const all=document.createElement("button");all.textContent="все";all.onclick=()=>{H().clear();drawLegend();render();};
+  const none=document.createElement("button");none.textContent="ничего";none.onclick=()=>{M().items.forEach(i=>H().add(i.id));drawLegend();render();};
+  mini.prepend(all,none);
+}
+
+function drawBridges(){
+  const br=document.getElementById("bridges");br.innerHTML="";
+  [...M().edges].sort((x,y)=>(y.b-y.a)-(x.b-x.a)).slice(0,7).forEach(e=>{
+    const it=M().meta[e.id];
+    const li=document.createElement("li"),b=document.createElement("button");
+    b.innerHTML=`<span class="gap" style="color:${it.color}">${e.b-e.a}</span><span class="t"><b>${it.name}</b>: гл. ${e.a} «${byN[e.a].title}» → гл. ${e.b} «${byN[e.b].title}»</span>`;
+    b.addEventListener("click",()=>{if(H().has(e.id)){H().delete(e.id);drawLegend();render();}focusEdge(e);});
+    li.appendChild(b);br.appendChild(li);
+  });
+}
+
+function setMode(mo){
+  mode=mo;pinned=null;
+  document.getElementById("m-guns").setAttribute("aria-pressed",mo==="guns");
+  document.getElementById("m-heroes").setAttribute("aria-pressed",mo==="heroes");
+  document.getElementById("sub").textContent=TEXT[mo].sub;
+  document.getElementById("foot").textContent=TEXT[mo].foot;
+  drawLegend();drawBridges();render();
+}
+document.getElementById("m-guns").onclick=()=>setMode("guns");
+document.getElementById("m-heroes").onclick=()=>setMode("heroes");
+const bc=document.getElementById("lay-circle"),ba=document.getElementById("lay-arc");
+function setLayout(l){layout=l;bc.setAttribute("aria-pressed",l==="circle");ba.setAttribute("aria-pressed",l==="arc");render();}
+bc.onclick=()=>setLayout("circle");ba.onclick=()=>setLayout("arc");
+
+setMode("guns");
+</script>
+
+</body>
+</html>
