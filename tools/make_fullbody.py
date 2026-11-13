@@ -27,7 +27,7 @@ SRC = {
 }
 OUT = os.path.join(D, 'images/heroes/full'); os.makedirs(OUT, exist_ok=True)
 
-def cut_white(im, tol=28):
+def cut_white(im, tol=50):
     im = im.convert('RGB'); w, h = im.size
     small = im if max(w, h) <= 1400 else im.resize((w * 1400 // max(w, h), h * 1400 // max(w, h)))
     sw, sh = small.size; px = small.load()
@@ -39,10 +39,28 @@ def cut_white(im, tol=28):
         x, y = q.popleft()
         if bg[y][x]: continue
         r, g, b = px[x, y]
-        if 255 - min(r, g, b) > tol or max(r, g, b) - min(r, g, b) > 22: continue
+        t = 95 if y > sh * 0.9 else tol   # внизу — ещё и серая тень под ногами
+        if 255 - min(r, g, b) > t or max(r, g, b) - min(r, g, b) > 18: continue
         bg[y][x] = True
         for nx, ny in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
             if 0 <= nx < sw and 0 <= ny < sh and not bg[ny][nx]: q.append((nx, ny))
+    # дырки между ногами/руками: замкнутые почти белые области заметного размера
+    seen = [[False] * sw for _ in range(sh)]
+    for y0 in range(sh):
+        for x0 in range(sw):
+            if bg[y0][x0] or seen[y0][x0]: continue
+            r, g, b = px[x0, y0]
+            if min(r, g, b) < 246 or max(r, g, b) - min(r, g, b) > 8: continue
+            comp = []; q2 = deque([(x0, y0)]); seen[y0][x0] = True
+            while q2:
+                x, y = q2.popleft(); comp.append((x, y))
+                for nx, ny in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
+                    if 0 <= nx < sw and 0 <= ny < sh and not seen[ny][nx] and not bg[ny][nx]:
+                        rr, gg, bb = px[nx, ny]
+                        if min(rr, gg, bb) >= 236 and max(rr, gg, bb) - min(rr, gg, bb) <= 10:
+                            seen[ny][nx] = True; q2.append((nx, ny))
+            if len(comp) > sw * sh * 0.00012:
+                for x, y in comp: bg[y][x] = True
     m = Image.new('L', (sw, sh), 255); mp = m.load()
     for y in range(sh):
         row = bg[y]

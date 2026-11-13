@@ -2,7 +2,7 @@
 # Пересборка страниц персонажей: python tools/build_chars.py .   (из папки лендинга)
 import sys, io, os, html as H
 D = sys.argv[1]; os.makedirs(D + '/characters', exist_ok=True)
-V = '12'
+V = '13'
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from chars_data import GROUPS
 from spoilers_data import SPOILERS
@@ -118,9 +118,8 @@ for i, (g, c) in enumerate(flat):
         <h2 class="char-h2">Где встречается</h2>
         <ul class="char-where">{where_html}</ul>
       </article>
-      {('<figure class="char-figure"><img loading="lazy" decoding="async" src="../images/heroes/full/'+slug+'.webp" alt="'+name+' в полный рост" /></figure>') if os.path.exists(D+'/images/heroes/full/'+slug+'.webp') else ''}
       <aside class="char-infobox">
-        {portrait(slug, mono, name, '../', 'crew-portrait char-infobox-portrait')}
+        {('<figure class="char-figure"><img decoding="async" src="../images/heroes/full/'+slug+'.webp" alt="'+name+' в полный рост" /></figure>') if os.path.exists(D+'/images/heroes/full/'+slug+'.webp') else portrait(slug, mono, name, '../', 'crew-portrait char-infobox-portrait')}
         <div class="char-infobox-name">{name}</div>
         <table class="char-facts">{rows_html}</table>
       </aside>
