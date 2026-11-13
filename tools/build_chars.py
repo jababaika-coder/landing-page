@@ -12,7 +12,7 @@ def has_img(slug):
 
 # внешность этих персонажей — спойлер: картинки размыты, открываются по клику на их странице
 SPOILER_LOOKS = {'polkovnik'}
-SPOIL_ATTR = ' onclick="this.classList.add(&#39;revealed&#39;)" title="Спойлер — нажмите, чтобы открыть"'
+SPOIL_ATTR = ' onclick="if(!this.classList.contains(&#39;revealed&#39;)){this.classList.add(&#39;revealed&#39;);event.preventDefault();event.stopPropagation();}" title="Спойлер — нажмите, чтобы открыть"'
 
 def portrait(slug, mono, name, pre, cls='crew-portrait', clickable=False):
     img = f'<img loading="lazy" decoding="async" src="{pre}images/heroes/{slug}.webp" alt="{name}" />' if has_img(slug) else ''
@@ -70,7 +70,7 @@ TAIL = '</body>\n</html>\n'
 def tile(c, pre):
     slug, mono, name, role = c[:4]
     return f'''      <a class="char-tile" href="{pre}characters/{slug}.html">
-        {portrait(slug, mono, name, pre)}
+        {portrait(slug, mono, name, pre, clickable=True)}
         <span class="char-tile-name">{name}</span>
         <span class="char-tile-role">{role}</span>
       </a>

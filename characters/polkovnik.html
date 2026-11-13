@@ -42,7 +42,7 @@
         <ul class="char-where"><li><a href="https://author.today/work/599118" target="_blank" rel="noopener">Книга «Архив „Константы“»</a></li></ul>
       </article>
       <aside class="char-infobox">
-        <figure class="char-figure look-spoiler" onclick="this.classList.add(&#39;revealed&#39;)" title="Спойлер — нажмите, чтобы открыть"><img decoding="async" src="../images/heroes/full/polkovnik.webp" alt="Полковник в полный рост" /><span class="look-spoiler-tag">спойлер · нажмите, чтобы открыть</span></figure>
+        <figure class="char-figure look-spoiler" onclick="if(!this.classList.contains(&#39;revealed&#39;)){this.classList.add(&#39;revealed&#39;);event.preventDefault();event.stopPropagation();}" title="Спойлер — нажмите, чтобы открыть"><img decoding="async" src="../images/heroes/full/polkovnik.webp" alt="Полковник в полный рост" /><span class="look-spoiler-tag">спойлер · нажмите, чтобы открыть</span></figure>
         <div class="char-infobox-name">Полковник</div>
         <table class="char-facts"><tr><th>Роль</th><td>Начальник Вадима</td></tr><tr><th>Группа</th><td>Космодром «Аркаим»</td></tr><tr><th>Где</th><td>служба безопасности «Аркаима»</td></tr></table>
       </aside>
