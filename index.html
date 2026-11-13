@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Орбита QA: тестируй, ломай, читай.</title>
-  <link rel="icon" href="images/logo-icon.webp?v=1" type="image/webp" />
+  <link rel="icon" href="images/favicon.ico?v=3" sizes="any" />
+  <link rel="icon" href="images/okulus-icon.png?v=3" type="image/png" />
+  <link rel="apple-touch-icon" href="images/okulus-apple-180.png?v=3" />
   <meta name="description" content="Орбита QA — вселенная, где хардкорное IT встречается с научной фантастикой. Книга, курс и песочница для изучения тестирования." />
   <link rel="canonical" href="https://orbita-qa.ru/" />
 
@@ -20,8 +22,6 @@
   <meta name="twitter:description" content="Вселенная, где хардкорное IT встречается с научной фантастикой. Книга, курс и песочница для изучения тестирования." />
   <meta name="twitter:image" content="https://orbita-qa.ru/images/logo.webp" />
 
-  <link rel="icon" href="images/logo.webp" type="image/webp" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -35,7 +35,7 @@
     />
   </noscript>
 
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=9" />
 </head>
 <body>
 
@@ -104,7 +104,7 @@
         </svg>
         <span class="plaque-content"><span class="slide-dot-num">02</span><span class="slide-dot-label">Инфраструктура</span></span>
       </button>
-      <button type="button" class="slide-dot plaque" data-slide-goto="2" aria-label="Философия">
+      <button type="button" class="slide-dot plaque" data-slide-goto="2" aria-label="Персонажи">
         <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
           <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
           <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
@@ -114,9 +114,9 @@
           <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
           <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
         </svg>
-        <span class="plaque-content"><span class="slide-dot-num">03</span><span class="slide-dot-label">Философия</span></span>
+        <span class="plaque-content"><span class="slide-dot-num">03</span><span class="slide-dot-label">Персонажи</span></span>
       </button>
-      <button type="button" class="slide-dot plaque" data-slide-goto="3" aria-label="Автор">
+      <button type="button" class="slide-dot plaque" data-slide-goto="3" aria-label="Философия">
         <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
           <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
           <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
@@ -126,7 +126,19 @@
           <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
           <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
         </svg>
-        <span class="plaque-content"><span class="slide-dot-num">04</span><span class="slide-dot-label">Автор</span></span>
+        <span class="plaque-content"><span class="slide-dot-num">04</span><span class="slide-dot-label">Философия</span></span>
+      </button>
+      <button type="button" class="slide-dot plaque" data-slide-goto="4" aria-label="Автор">
+        <svg class="plaque-frame-svg" viewBox="0 0 220 60" preserveAspectRatio="none" aria-hidden="true">
+          <path fill="url(#plaque-border)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path fill="url(#plaque-patina)" d="M 9 2 L 211 2 L 218 9 L 218 51 L 211 58 L 9 58 L 2 51 L 2 9 Z" />
+          <path class="plaque-screen-path" fill="url(#plaque-screen)" d="M 15 8 L 205 8 L 212 15 L 212 45 L 205 52 L 15 52 L 8 45 L 8 15 Z" />
+          <circle class="plaque-rivet" cx="11" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="11" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
+          <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
+        </svg>
+        <span class="plaque-content"><span class="slide-dot-num">05</span><span class="slide-dot-label">Автор</span></span>
       </button>
     </nav>
   </header>
@@ -244,6 +256,110 @@
     </div>
   </section>
 
+  <!-- ═══ ПЕРСОНАЖИ (главные; все — на heroes.html) ═══ -->
+  <section id="crew" class="section crew-section slide">
+    <h2 class="section-title">Персонажи</h2>
+    <div class="crew-grid">
+      <a class="crew-card crew-card--link panel" href="characters/alan.html">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content crew-card-content">
+          <div class="crew-portrait" data-monogram="A"><img loading="lazy" decoding="async" src="images/heroes/alan.webp" alt="Алан Климов" /></div>
+          <h3 class="crew-name">Алан Климов</h3>
+          <div class="crew-role">Курсант-тестировщик, 14 лет</div>
+          <p>Тайком пробрался на закрытый космодром «Аркаим», чтобы найти сестру. Попался — и неожиданно стал курсантом: теперь ищет баги в виртуальной реальности.</p>
+        </div>
+      </a>
+      <a class="crew-card crew-card--link panel" href="characters/okulus.html">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content crew-card-content">
+          <div class="crew-portrait" data-monogram="О"><img loading="lazy" decoding="async" src="images/heroes/okulus.webp" alt="Окулус" /></div>
+          <h3 class="crew-name">Окулус</h3>
+          <div class="crew-role">Робот-наставник</div>
+          <p>Летающий робот-инструктор виртуальной реальности. Вежлив, педантичен и категорически против дегустации оборудования.</p>
+        </div>
+      </a>
+      <a class="crew-card crew-card--link panel" href="characters/yulia.html">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content crew-card-content">
+          <div class="crew-portrait" data-monogram="Ю"><img loading="lazy" decoding="async" src="images/heroes/yulia.webp" alt="Юля Климова" /></div>
+          <h3 class="crew-name">Юля Климова</h3>
+          <div class="crew-role">Космонавт «Константы»</div>
+          <p>Старшая сестра Алана. Её корабль «Константа» перестал выходить на связь — с этого и начинается вся история.</p>
+        </div>
+      </a>
+      <a class="crew-card crew-card--link panel" href="characters/vadim.html">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+          <path d="M 9 24 L 9 18 L 18 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 24 L 291 18 L 282 9" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 9 256 L 9 262 L 18 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <path d="M 291 256 L 291 262 L 282 271" fill="none" stroke="#29B6F6" stroke-width="2" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="panel-content crew-card-content">
+          <div class="crew-portrait" data-monogram="В"><img loading="lazy" decoding="async" src="images/heroes/vadim.webp" alt="Вадим Северов" /></div>
+          <h3 class="crew-name">Вадим Северов</h3>
+          <div class="crew-role">Капитан службы безопасности</div>
+          <p>Отвечает за безопасность «Аркаима». Жених Юли. Вытащил Алана из неприятностей и оформил курсантом. Всегда знает чуть больше, чем рассказывает.</p>
+        </div>
+      </a>
+      <a href="heroes.html" class="crew-card crew-card--more panel">
+        <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
+          <path fill="url(#panel-bg)" d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-stroke" fill="none" stroke-width="2" vector-effect="non-scaling-stroke"
+            d="M 18 3 L 282 3 L 297 18 L 297 262 L 282 277 L 18 277 L 3 262 L 3 18 Z" />
+          <path class="panel-frame-glow-stroke" fill="none" stroke-width="1" filter="url(#panel-glow)" vector-effect="non-scaling-stroke"
+            d="M 22 9 L 278 9 L 291 22 L 291 258 L 278 271 L 22 271 L 9 258 L 9 22 Z" />
+        </svg>
+        <div class="panel-content crew-card-content">
+          <div class="crew-more-faces" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="images/heroes/kostya.webp" alt="" />
+            <img loading="lazy" decoding="async" src="images/heroes/maya.webp" alt="" />
+            <img loading="lazy" decoding="async" src="images/heroes/panov.webp" alt="" />
+            <img loading="lazy" decoding="async" src="images/heroes/andrey.webp" alt="" />
+          </div>
+          <h3 class="crew-name">Все персонажи</h3>
+          <div class="crew-role">Семья, космодром, посёлок</div>
+          <p>Родители Алана, инженеры «Аркаима», друзья из посёлка и другие — все, кого вы встретите в книге и курсе.</p>
+          <span class="crew-more-arrow">Смотреть всех →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- ═══ ФИЛОСОФИЯ ═══ -->
   <section id="philosophy" class="section philosophy-section slide">
     <h2 class="section-title">Моя философия</h2>
@@ -302,8 +418,8 @@
     <h2 class="section-title">Кто по ту сторону экрана?</h2>
     <div class="author-block">
       <div class="author-photo-frame">
-        <img loading="lazy" decoding="async" src="images/author.webp?v=2" alt="Наталья" class="author-photo is-default" />
-        <img data-lazy-src="images/author_2.webp?v=2" alt="Наталья" class="author-photo is-hover" />
+        <img loading="lazy" decoding="async" src="images/author.webp?v=3" alt="Наталья" class="author-photo is-default" />
+        <img data-lazy-src="images/author_2.webp?v=3" alt="Наталья" class="author-photo is-hover" />
       </div>
       <div class="author-text panel">
         <svg class="panel-frame-svg" viewBox="0 0 300 280" preserveAspectRatio="none">
@@ -380,7 +496,7 @@
           <circle class="plaque-rivet" cx="11" cy="49" r="3" fill="url(#plaque-rivet)" />
           <circle class="plaque-rivet" cx="209" cy="49" r="3" fill="url(#plaque-rivet)" />
         </svg>
-        <span class="plaque-content"><span data-slide-counter-current>01</span> / 04</span>
+        <span class="plaque-content"><span data-slide-counter-current>01</span> / 05</span>
       </span>
       <button type="button" class="slide-nav-btn plaque" data-slide-next aria-label="Следующий слайд">
         <svg class="plaque-frame-svg" viewBox="0 0 60 60" preserveAspectRatio="none" aria-hidden="true">
@@ -452,7 +568,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
   <script src="game.js?v=5"></script>
 </body>
 </html>

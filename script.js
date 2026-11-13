@@ -284,3 +284,26 @@ if (countdownBtns.length) {
   tickCountdowns();
   countdownInterval = setInterval(tickCountdowns, 1000);
 }
+
+// ═══ Якорь в адресе (#crew и т.п.) на десктопе ════════════════════════════
+// Браузер сам прокручивает к якорю контейнер слайдов (у него overflow: hidden),
+// и трек съезжает: сверху торчит хвост предыдущего слайда. Возвращаем
+// прокрутку на место и открываем нужный слайд штатно, без анимации.
+function openSlideFromHash() {
+  if (!isDesktop() || !track || !slides.length) return;
+  const id = decodeURIComponent(location.hash.slice(1));
+  const idx = id ? slides.findIndex((s) => s.id === id) : -1;
+  if (viewport) viewport.scrollTop = 0;
+  if (idx < 0) return;
+  track.style.transition = "none";
+  current = idx;
+  track.style.transform = `translateY(-${idx * 100}%)`;
+  updateUI();
+  slides[idx].scrollTop = 0;
+  void track.offsetHeight; // применить без анимации, затем вернуть переход
+  track.style.transition = "";
+}
+
+window.addEventListener("load", openSlideFromHash);
+window.addEventListener("hashchange", openSlideFromHash);
+if (viewport) viewport.addEventListener("scroll", () => { if (isDesktop()) viewport.scrollTop = 0; });

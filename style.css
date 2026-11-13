@@ -1105,3 +1105,407 @@ body.game-open .slides-viewport { visibility: hidden; }
     display: none;
   }
 }
+
+/* ── Экипаж (главные герои) ────────────────────────────────────── */
+.crew-grid {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+/* Слайды прокручиваемые, поэтому браузер делает их фокусируемыми и рисует
+   рамку фокуса при переходе по якорю (#crew) — она не нужна. */
+.slide:focus { outline: none; }
+
+.crew-portrait img { object-position: 50% 0%; }
+
+/* Пятая карточка «Все герои» — ссылка на heroes.html */
+.crew-card--more { display: block; color: inherit; }
+.crew-card--more .crew-card-content { justify-content: flex-start; }
+.crew-more-faces {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 18px;
+}
+.crew-more-faces img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: 50% 0%;
+  border: 1px solid var(--border);
+  filter: saturate(0.85) brightness(0.9);
+  transition: filter 0.3s;
+}
+.crew-card--more:hover .crew-more-faces img { filter: none; }
+.crew-more-arrow {
+  margin-top: auto;
+  padding-top: 16px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: rgba(160, 210, 240, 0.9);
+  transition: color 0.2s;
+}
+.crew-card--more:hover .crew-more-arrow { color: #fff; }
+
+.crew-card { transition: transform 0.25s; }
+.crew-card:hover { transform: translateY(-4px); }
+.crew-card:hover .panel-frame-stroke { stroke: #7fa8c9; }
+.crew-card:hover .panel-frame-glow-stroke { stroke: #6cd4ff; }
+
+.crew-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px 22px 26px;
+}
+
+/* Портрет: пока картинок нет — заглушка с монограммой (data-monogram).
+   Когда появится файл, внутрь кладётся <img>, и заглушка уходит под него. */
+.crew-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 50% 38%, rgba(41,182,246,0.16), transparent 62%),
+    linear-gradient(160deg, var(--panel-a) 0%, var(--panel-b) 60%, var(--panel-c) 100%);
+}
+
+.crew-portrait::before {
+  content: attr(data-monogram);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 4.2rem;
+  color: rgba(41, 182, 246, 0.28);
+  text-shadow: 0 0 24px rgba(41, 182, 246, 0.25);
+}
+
+.crew-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.crew-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0 0 6px;
+}
+
+.crew-role {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+  margin-bottom: 14px;
+}
+
+.crew-card p {
+  font-size: 0.98rem;
+  line-height: 1.58;
+  color: var(--fg-dim);
+  margin: 0;
+}
+
+
+/* ── Страница «Все герои» (heroes.html): обычная прокрутка, без слайдов ── */
+.heroes-page .site-header { position: sticky; top: 0; }
+
+@media (min-width: 861px) {
+  html:has(body.heroes-page),
+  body.heroes-page { height: auto; overflow: auto; }
+}
+
+.heroes-back {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+  transition: color 0.2s;
+}
+.heroes-back:hover { color: var(--cyan); }
+
+.heroes-lead {
+  max-width: 760px;
+  margin: -24px auto 56px;
+  text-align: center;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+.heroes-group { max-width: 1500px; margin: 0 auto 64px; }
+.heroes-group:last-child { margin-bottom: 0; }
+
+.heroes-group-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+  margin: 0 0 22px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(41, 182, 246, 0.18);
+}
+
+.heroes-group .crew-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+
+.crew-where {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.crew-where span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid rgba(41, 182, 246, 0.3);
+  color: rgba(160, 210, 240, 0.75);
+}
+
+.heroes-footer-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 72px auto 0;
+  max-width: 760px;
+}
+.heroes-footer-cta .infra-card-btn { width: auto; flex: 1 1 240px; }
+
+@media (max-width: 560px) {
+}
+
+@media (min-width: 861px) {
+  .heroes-page .site-header {
+    background: rgba(5, 8, 12, 0.78);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(41, 182, 246, 0.14);
+  }
+  .heroes-page .section { padding-top: 56px; }
+}
+
+/* Невысокие экраны ноутбуков: «Экипаж» должен влезать в слайд целиком */
+@media (min-width: 861px) and (max-height: 820px) {
+  .crew-section.section { padding-top: 28px; padding-bottom: 20px; }
+  .crew-section .section-title { margin-bottom: 26px; padding-bottom: 14px; }
+  /* квадрат сохраняем, но ограничиваем по высоте экрана */
+  .crew-section .crew-portrait,
+  .crew-section .crew-more-faces { width: min(100%, 20vh); margin: 0 auto 14px; }
+  .crew-section .crew-card-content { padding: 18px 18px 20px; }
+  .crew-section .crew-card p { font-size: 0.9rem; line-height: 1.5; }
+  .crew-section .crew-role { margin-bottom: 10px; }
+}
+
+/* ═══ Персонажи: сетка-«вики» (heroes.html) и страницы персонажей ═══ */
+.heroes-nav { display: flex; gap: 22px; align-items: center; }
+
+.char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 22px 18px;
+}
+
+.char-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: inherit;
+}
+.char-tile .crew-portrait {
+  margin-bottom: 8px;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.char-tile .crew-portrait::before { font-size: 3.2rem; }
+.char-tile:hover .crew-portrait {
+  border-color: rgba(108, 212, 255, 0.8);
+  box-shadow: 0 0 0 1px rgba(108, 212, 255, 0.35), 0 10px 28px rgba(0, 0, 0, 0.45);
+  transform: translateY(-3px);
+}
+.char-tile-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+  transition: color 0.2s;
+}
+.char-tile:hover .char-tile-name { color: #fff; }
+.char-tile-role { font-size: 0.85rem; line-height: 1.35; color: var(--fg-dim); }
+
+/* страница персонажа */
+.char-page { max-width: 1180px; }
+.char-crumbs {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-faint);
+  margin-bottom: 26px;
+}
+.char-crumbs a { color: var(--cyan-dim); }
+.char-crumbs a:hover { color: var(--cyan); }
+.char-crumbs span { margin: 0 6px; }
+
+.char-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 44px;
+  align-items: start;
+}
+.char-article { font-size: 1.08rem; line-height: 1.7; color: var(--fg-dim); min-width: 0; }
+.char-article p { margin: 0 0 16px; max-width: 65ch; }
+.char-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 0.03em;
+  color: var(--fg);
+  margin: 0 0 6px;
+  text-wrap: balance;
+}
+.char-lead {
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+}
+.char-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 34px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(41, 182, 246, 0.18);
+}
+.char-where { margin: 0; padding-left: 20px; }
+.char-where a { color: rgba(160, 210, 240, 0.9); border-bottom: 1px solid rgba(41, 182, 246, 0.35); }
+.char-where a:hover { color: #fff; border-color: var(--cyan); }
+
+.char-infobox {
+  padding: 14px;
+  background: linear-gradient(160deg, var(--panel-a) 0%, var(--panel-b) 60%, var(--panel-c) 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(41,182,246,0.08), 0 20px 50px rgba(0,0,0,0.45);
+}
+.char-infobox-portrait { margin-bottom: 12px; }
+.char-infobox-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg);
+  padding: 4px 0 10px;
+  border-bottom: 1px solid rgba(41, 182, 246, 0.18);
+}
+.char-facts { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.char-facts th, .char-facts td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(41, 182, 246, 0.1);
+}
+.char-facts th { width: 38%; font-weight: 700; color: var(--fg-faint); }
+.char-facts td { color: var(--fg-dim); }
+
+.char-mates { margin-top: 64px; }
+.char-mates .char-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+
+.char-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(41, 182, 246, 0.14);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.char-pager a { color: rgba(160, 210, 240, 0.85); }
+.char-pager a:hover { color: #fff; }
+
+@media (max-width: 760px) {
+  .char-layout { grid-template-columns: 1fr; gap: 26px; }
+  .char-infobox { order: -1; max-width: 360px; width: 100%; margin: 0 auto; }
+  .char-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; }
+  .heroes-nav { gap: 14px; }
+  .heroes-back { font-size: 0.75rem; }
+}
+.crew-card--link { display: block; color: inherit; }
+
+/* Страницы персонажей: текст светлее и с тенью — читается поверх космоса */
+.heroes-page {
+  --fg-dim: rgba(214, 232, 248, 0.9);
+  --fg-faint: rgba(190, 215, 238, 0.78);
+  --cyan-dim: rgba(110, 205, 255, 0.95);
+}
+.heroes-page .heroes-lead,
+.heroes-page .char-article,
+.heroes-page .char-tile-role,
+.heroes-page .char-crumbs { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
+.heroes-page .heroes-group-title,
+.heroes-page .char-tile-name,
+.heroes-page .char-title,
+.heroes-page .section-title { text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9); }
+.heroes-page .heroes-back { color: rgba(140, 215, 255, 0.95); }
+
+/* Спойлеры на страницах персонажей: свёрнуты, открываются по клику */
+.char-spoiler-note { font-size: 0.92rem; color: var(--fg-faint); }
+.char-spoiler {
+  margin: 0 0 12px;
+  border: 1px solid rgba(232, 180, 92, 0.45);
+  background: rgba(40, 28, 10, 0.35);
+}
+.char-spoiler summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 12px 16px;
+  font-weight: 700;
+  color: var(--fg);
+}
+.char-spoiler summary::-webkit-details-marker { display: none; }
+.char-spoiler summary::before { content: "▸ "; color: #e8b45c; }
+.char-spoiler[open] summary::before { content: "▾ "; }
+.char-spoiler-warn {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1206;
+  background: #e8b45c;
+}
+.char-spoiler-body { padding: 0 16px 6px; }
+
+.char-spoiler-where { font-weight: 600; color: var(--fg-dim); }
