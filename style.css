@@ -1569,3 +1569,22 @@ body.game-open .slides-viewport { visibility: hidden; }
   .posts-section .post-cover { aspect-ratio: 16 / 5; }
   .posts-section .post-body p { font-size: 0.88rem; line-height: 1.45; }
 }
+
+/* Фигура персонажа в полный рост — между текстом и справкой */
+.char-figure { margin: 0; display: flex; justify-content: center; align-items: flex-end; }
+.char-figure img {
+  max-height: 560px;
+  width: auto;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 22px rgba(41, 182, 246, 0.18));
+}
+.char-layout:has(.char-figure) { grid-template-columns: minmax(0, 1fr) auto 320px; }
+@media (max-width: 1100px) {
+  .char-layout:has(.char-figure) { grid-template-columns: minmax(0, 1fr) 320px; }
+  .char-figure { grid-column: 2; grid-row: 2; }
+  .char-figure img { max-height: 460px; }
+}
+@media (max-width: 760px) {
+  .char-layout:has(.char-figure) { grid-template-columns: 1fr; }
+  .char-figure { grid-column: auto; grid-row: auto; order: 1; }
+  .char-figure img { max-height: 420px; }
+}
