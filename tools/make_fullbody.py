@@ -14,7 +14,7 @@ SRC = {
     'vadim':     'Вадим Северов/Книга 1/Gemini_Generated_Image_vt90e3vt90e3vt90-removebg-preview.png',
     'andrey':    'Андрей Климов/Gemini_Generated_Image_1lfg651lfg651lfg.jpg',
     'albina':    'Альбина Климова/Gemini_Generated_Image_q2kl23q2kl23q2kl.jpg',
-    'panov':     'Майор Панов/Прочие референсы/magnific_._YVgEjLmWeC.png',
+    'panov':     'Майор Панов/Gemini_Generated_Image_ipwgc2ipwgc2ipwg-Photoroom.png',
     'polkovnik': 'Александр Северов/Gemini_Generated_Image_hc6gtmhc6gtmhc6g.jpg',
     'serega':    'Сергей Логинов/magnific_rleFAOPxtc.png',
     'mihalych':  'Егор Михалыч/magnific_MXwz1ZsDCm.png',
