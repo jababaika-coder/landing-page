@@ -1509,3 +1509,63 @@ body.game-open .slides-viewport { visibility: hidden; }
 .char-spoiler-body { padding: 0 16px 6px; }
 
 .char-spoiler-where { font-weight: 600; color: var(--fg-dim); }
+
+/* ── Статьи и материалы ─────────────────────────────────────────── */
+.posts-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 26px;
+}
+.post-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: linear-gradient(160deg, var(--panel-a) 0%, var(--panel-b) 60%, var(--panel-c) 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(41,182,246,0.08), 0 18px 40px rgba(0,0,0,0.45);
+  transition: transform 0.25s, border-color 0.25s;
+}
+.post-card:hover { transform: translateY(-4px); border-color: rgba(108, 212, 255, 0.6); }
+.post-cover { display: block; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--border); }
+.post-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.post-card:hover .post-cover img { transform: scale(1.03); }
+.post-body { display: flex; flex-direction: column; gap: 8px; padding: 22px 24px 24px; flex: 1; }
+.post-kind {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(110, 205, 255, 0.95);
+}
+.post-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.3; text-wrap: balance; }
+.post-title a { color: var(--fg); }
+.post-title a:hover { color: #fff; }
+.post-meta { font-size: 0.85rem; color: var(--fg-faint); }
+.post-body p { margin: 6px 0 14px; font-size: 1rem; line-height: 1.6; color: var(--fg-dim); flex: 1; }
+.post-btn { margin-top: auto; }
+
+@media (min-width: 861px) and (max-height: 820px) {
+  .posts-section.section { padding-top: 28px; padding-bottom: 20px; }
+  .posts-section .section-title { margin-bottom: 26px; padding-bottom: 14px; }
+  .posts-section .post-cover { aspect-ratio: 16 / 7; }
+  .posts-section .post-body p { font-size: 0.92rem; line-height: 1.5; }
+}
+
+/* Шесть разделов: на телефоне кружки навигации поменьше, чтобы влезли в строку */
+@media (max-width: 860px) {
+  .slide-dots { gap: 6px; flex-wrap: nowrap; }
+  .slide-dot { width: clamp(34px, 9.5vw, 46px); height: clamp(34px, 9.5vw, 46px); flex: 0 0 auto; }
+  .slide-dot-num { font-size: 0.8rem; }
+}
+
+/* Статьи на компьютере: две колонки компактных карточек, низкая обложка */
+@media (min-width: 861px) {
+  .posts-grid { grid-template-columns: repeat(auto-fill, minmax(380px, 420px)); justify-content: center; max-width: 1340px; gap: 22px; }
+  .post-cover { aspect-ratio: 16 / 7; }
+  .post-body { padding: 18px 22px 20px; gap: 6px; }
+  .post-body p { margin: 2px 0 10px; font-size: 0.95rem; line-height: 1.55; }
+  .post-btn { padding: 10px 18px; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  .posts-section .post-cover { aspect-ratio: 16 / 5; }
+  .posts-section .post-body p { font-size: 0.88rem; line-height: 1.45; }
+}
