@@ -2,7 +2,7 @@
 # Пересборка страниц персонажей: python tools/build_chars.py .   (из папки лендинга)
 import sys, io, os, html as H
 D = sys.argv[1]; os.makedirs(D + '/characters', exist_ok=True)
-V = '13'
+V = '14'
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from chars_data import GROUPS
 from spoilers_data import SPOILERS
@@ -10,9 +10,25 @@ from spoilers_data import SPOILERS
 def has_img(slug):
     return os.path.exists(f'{D}/images/heroes/{slug}.webp')
 
-def portrait(slug, mono, name, pre, cls='crew-portrait'):
+# внешность этих персонажей — спойлер: картинки размыты, открываются по клику на их странице
+SPOILER_LOOKS = {'polkovnik'}
+SPOIL_ATTR = ' onclick="this.classList.add(&#39;revealed&#39;)" title="Спойлер — нажмите, чтобы открыть"'
+
+def portrait(slug, mono, name, pre, cls='crew-portrait', clickable=False):
     img = f'<img loading="lazy" decoding="async" src="{pre}images/heroes/{slug}.webp" alt="{name}" />' if has_img(slug) else ''
+    if slug in SPOILER_LOOKS and img:
+        cls += ' look-spoiler'
+        img += '<span class="look-spoiler-tag">спойлер</span>'
+        return f'<div class="{cls}" data-monogram="{mono}"' + (SPOIL_ATTR if clickable else '') + f'>{img}</div>'
     return f'<div class="{cls}" data-monogram="{mono}">{img}</div>'
+
+def figure(slug, name):
+    if not os.path.exists(D + '/images/heroes/full/' + slug + '.webp'):
+        return None
+    sp = slug in SPOILER_LOOKS
+    return ('<figure class="char-figure' + (' look-spoiler' if sp else '') + '"' + (SPOIL_ATTR if sp else '') + '>'
+            + '<img decoding="async" src="../images/heroes/full/' + slug + '.webp" alt="' + name + ' в полный рост" />'
+            + ('<span class="look-spoiler-tag">спойлер · нажмите, чтобы открыть</span>' if sp else '') + '</figure>')
 
 def head(title, desc, canon, pre):
     home = pre or './'
@@ -119,7 +135,7 @@ for i, (g, c) in enumerate(flat):
         <ul class="char-where">{where_html}</ul>
       </article>
       <aside class="char-infobox">
-        {('<figure class="char-figure"><img decoding="async" src="../images/heroes/full/'+slug+'.webp" alt="'+name+' в полный рост" /></figure>') if os.path.exists(D+'/images/heroes/full/'+slug+'.webp') else portrait(slug, mono, name, '../', 'crew-portrait char-infobox-portrait')}
+        {figure(slug, name) or portrait(slug, mono, name, '../', 'crew-portrait char-infobox-portrait', clickable=True)}
         <div class="char-infobox-name">{name}</div>
         <table class="char-facts">{rows_html}</table>
       </aside>

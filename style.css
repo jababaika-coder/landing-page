@@ -1583,3 +1583,17 @@ body.game-open .slides-viewport { visibility: hidden; }
   filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
 }
 @media (max-width: 760px) { .char-figure img { max-height: 440px; } }
+
+/* Внешность-спойлер: картинка размыта, открывается по клику (только на странице персонажа) */
+.look-spoiler { position: relative; overflow: hidden; }
+.look-spoiler img { filter: blur(16px) brightness(0.7); transform: scale(1.06); transition: filter 0.4s; }
+.look-spoiler.revealed img { filter: none; transform: none; }
+.look-spoiler[onclick]:not(.revealed) { cursor: pointer; }
+.look-spoiler-tag {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  padding: 4px 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #1a1206; background: #e8b45c; white-space: nowrap; pointer-events: none;
+}
+.look-spoiler.revealed .look-spoiler-tag { display: none; }
+.char-figure.look-spoiler img { filter: blur(18px) brightness(0.7) drop-shadow(0 14px 22px rgba(0,0,0,0.55)); }
+.char-figure.look-spoiler.revealed img { filter: drop-shadow(0 14px 22px rgba(0,0,0,0.55)); }
