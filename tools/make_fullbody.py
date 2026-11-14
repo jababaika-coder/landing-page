@@ -80,5 +80,6 @@ for slug, rel in SRC.items():
     im = im.convert('RGBA') if has_alpha else cut_white(im)
     im = im.crop(im.getchannel('A').getbbox())
     if im.height > 1000: im = im.resize((im.width * 1000 // im.height, 1000), Image.LANCZOS)
+    if im.width > 640: im = im.resize((640, im.height * 640 // im.width), Image.LANCZOS)   # карточка не шире ~300px
     im.save(os.path.join(OUT, slug + '.webp'), 'WEBP', quality=82)
     print(slug, im.size, os.path.getsize(os.path.join(OUT, slug + '.webp')) // 1024, 'KB')
