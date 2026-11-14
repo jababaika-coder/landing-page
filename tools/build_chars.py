@@ -13,7 +13,7 @@ def has_img(slug):
 # внешность этих персонажей — спойлер: картинки размыты, открываются по клику на их странице
 SPOILER_LOOKS = {'polkovnik'}
 # вместо фигуры в рост — сцена целиком (квадрат, без прозрачного фона), пока нет фигуры
-SCENE_FIGS = {'pasha'}
+SCENE_FIGS = set()
 SPOIL_ATTR = ' onclick="if(!this.classList.contains(&#39;revealed&#39;)){this.classList.add(&#39;revealed&#39;);event.preventDefault();event.stopPropagation();}" title="Спойлер — нажмите, чтобы открыть"'
 
 def portrait(slug, mono, name, pre, cls='crew-portrait', clickable=False):

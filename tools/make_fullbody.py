@@ -23,6 +23,7 @@ SRC = {
     'maya':      'Майя Логинова/Gemini_Generated_Image_1378kz1378kz1378.jpg',
     'max':       'Макс/Gemini_Generated_Image_g6eqjmg6eqjmg6eq.jpg',
     'rita':      'Рита/Gemini_Generated_Image_8v6yg8v6yg8v6yg8.jpg',
+    'pasha':     'Паша/Охранник с немецкой овчаркой.png',
     'romka':     'Ребята с велопрогулки/Detailed_character_development_f…_2K_202609050135.jpeg',
 }
 OUT = os.path.join(D, 'images/heroes/full'); os.makedirs(OUT, exist_ok=True)
