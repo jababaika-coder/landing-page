@@ -9,7 +9,7 @@ D = sys.argv[1]
 B = 'C:/Users/ASUS/Pictures/Курс по тестированию/Книга/'
 SRC = {
     'alan':      'Алан Климов/Юноша в зелёно-оранжевом костюме.png',
-    'okulus':    'Gemini_Generated_Image_7xcbij7xcbij7xcb.png',
+    'okulus':    'Детализированный робот с голубым объективом.png',
     'yulia':     'Юля Климова/Рыжеволосая специалистка с планшетом.png',
     'vadim':     'Вадим Северов/Книга 1/Gemini_Generated_Image_vt90e3vt90e3vt90-removebg-preview.png',
     'andrey':    'Андрей Климов/Gemini_Generated_Image_1lfg651lfg651lfg.jpg',
