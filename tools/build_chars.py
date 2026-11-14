@@ -47,6 +47,9 @@ def head(title, desc, canon, pre):
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:title" content="{title}" />
   <meta property="og:description" content="{H.escape(desc)}" />
+  <meta property="og:image" content="https://orbita-qa.ru/images/og-orbita.jpg?v=1" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
   <link rel="icon" href="{pre}images/favicon.ico?v=3" sizes="any" />
   <link rel="icon" href="{pre}images/okulus-icon.png?v=3" type="image/png" />
   <link rel="apple-touch-icon" href="{pre}images/okulus-apple-180.png?v=3" />
