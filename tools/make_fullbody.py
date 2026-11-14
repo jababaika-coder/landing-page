@@ -25,6 +25,7 @@ SRC = {
     'rita':      'Рита/Character_detail_refinement_and_…_202609050129-Photoroom.png',
     'pasha':     'Паша/Охранник с немецкой овчаркой.png',
     'rayda':     'Паша/Райда в полный рост-Photoroom.png',
+    'vorontsov': 'Воронцов/Gemini_Generated_Image_ilshr2ilshr2ilsh-Photoroom.png',
     'romka':     'Ребята с велопрогулки/Detailed_character_development_f…_2K_202609050135.jpeg',
 }
 OUT = os.path.join(D, 'images/heroes/full'); os.makedirs(OUT, exist_ok=True)
