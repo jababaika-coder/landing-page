@@ -17,7 +17,7 @@ SRC = {
     'panov':     'Майор Панов/Gemini_Generated_Image_ipwgc2ipwgc2ipwg-Photoroom.png',
     'polkovnik': 'Александр Северов/Gemini_Generated_Image_hc6gtmhc6gtmhc6g.jpg',
     'serega':    'Сергей Логинов/Gemini_Generated_Image_e3p8fae3p8fae3p8-Photoroom.png',
-    'mihalych':  'Егор Михалыч/magnific_MXwz1ZsDCm.png',
+    'mihalych':  'Егор Михалыч/Седой рабочий космодрома Аркаим.png',
     'vladimir':  'Владимир/Пожилой мастер с инструментами.png',
     'kostya':    'Костя/Gemini_Generated_Image_1hmk11hmk11hmk11-Photoroom.png',
     'maya':      'Майя Логинова/Светловолосая героиня в сиреневом свитере.png',
