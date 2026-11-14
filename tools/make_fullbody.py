@@ -20,7 +20,7 @@ SRC = {
     'mihalych':  'Егор Михалыч/magnific_MXwz1ZsDCm.png',
     'vladimir':  'Владимир/Пожилой мастер с инструментами.png',
     'kostya':    'Костя/Gemini_Generated_Image_1hmk11hmk11hmk11-Photoroom.png',
-    'maya':      'Майя Логинова/Gemini_Generated_Image_1378kz1378kz1378.jpg',
+    'maya':      'Майя Логинова/Светловолосая героиня в сиреневом свитере.png',
     'max':       'Макс/Gemini_Generated_Image_trrxuotrrxuotrrx-Photoroom.png',
     'rita':      'Рита/Character_detail_refinement_and_…_202609050129-Photoroom.png',
     'pasha':     'Паша/Охранник с немецкой овчаркой.png',
