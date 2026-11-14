@@ -1583,6 +1583,8 @@ body.game-open .slides-viewport { visibility: hidden; }
   filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
 }
 @media (max-width: 760px) { .char-figure img { max-height: 440px; } }
+.char-figure.scene { padding: 10px 0 12px; background: none; }
+.char-figure.scene img { max-height: none; width: 100%; border-radius: 10px; filter: none; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); }
 
 /* Внешность-спойлер: картинка размыта, открывается по клику (только на странице персонажа) */
 .look-spoiler { position: relative; overflow: hidden; }

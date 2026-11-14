@@ -2,7 +2,7 @@
 # Пересборка страниц персонажей: python tools/build_chars.py .   (из папки лендинга)
 import sys, io, os, html as H
 D = sys.argv[1]; os.makedirs(D + '/characters', exist_ok=True)
-V = '14'
+V = '15'
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from chars_data import GROUPS
 from spoilers_data import SPOILERS
@@ -12,6 +12,8 @@ def has_img(slug):
 
 # внешность этих персонажей — спойлер: картинки размыты, открываются по клику на их странице
 SPOILER_LOOKS = {'polkovnik'}
+# вместо фигуры в рост — сцена целиком (квадрат, без прозрачного фона), пока нет фигуры
+SCENE_FIGS = {'pasha'}
 SPOIL_ATTR = ' onclick="if(!this.classList.contains(&#39;revealed&#39;)){this.classList.add(&#39;revealed&#39;);event.preventDefault();event.stopPropagation();}" title="Спойлер — нажмите, чтобы открыть"'
 
 def portrait(slug, mono, name, pre, cls='crew-portrait', clickable=False):
@@ -26,8 +28,8 @@ def figure(slug, name):
     if not os.path.exists(D + '/images/heroes/full/' + slug + '.webp'):
         return None
     sp = slug in SPOILER_LOOKS
-    return ('<figure class="char-figure' + (' look-spoiler' if sp else '') + '"' + (SPOIL_ATTR if sp else '') + '>'
-            + '<img decoding="async" src="../images/heroes/full/' + slug + '.webp" alt="' + name + ' в полный рост" />'
+    return ('<figure class="char-figure' + (' look-spoiler' if sp else '') + (' scene' if slug in SCENE_FIGS else '') + '"' + (SPOIL_ATTR if sp else '') + '>'
+            + '<img decoding="async" src="../images/heroes/full/' + slug + '.webp" alt="' + name + (' на посту' if slug in SCENE_FIGS else ' в полный рост') + '" />'
             + ('<span class="look-spoiler-tag">спойлер · нажмите, чтобы открыть</span>' if sp else '') + '</figure>')
 
 def head(title, desc, canon, pre):
