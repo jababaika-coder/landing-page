@@ -22,7 +22,7 @@ SRC = {
     'kostya':    'Костя/Gemini_Generated_Image_tc2omltc2omltc2o.jpg',
     'maya':      'Майя Логинова/Gemini_Generated_Image_1378kz1378kz1378.jpg',
     'max':       'Макс/Gemini_Generated_Image_g6eqjmg6eqjmg6eq.jpg',
-    'rita':      'Рита/Gemini_Generated_Image_8v6yg8v6yg8v6yg8.jpg',
+    'rita':      'Рита/Character_detail_refinement_and_…_202609050129-Photoroom.png',
     'pasha':     'Паша/Охранник с немецкой овчаркой.png',
     'rayda':     'Паша/Райда в полный рост-Photoroom.png',
     'romka':     'Ребята с велопрогулки/Detailed_character_development_f…_2K_202609050135.jpeg',
