@@ -12,7 +12,7 @@ SRC = {
     'okulus':    'Детализированный робот с голубым объективом.png',
     'yulia':     'Юля Климова/Рыжеволосая специалистка с планшетом.png',
     'vadim':     'Вадим Северов/Книга 1/Gemini_Generated_Image_vt90e3vt90e3vt90-removebg-preview.png',
-    'andrey':    'Андрей Климов/Gemini_Generated_Image_1lfg651lfg651lfg.jpg',
+    'andrey':    'Андрей Климов/Седовласый мужчина с кожаной сумкой.png',
     'albina':    'Альбина Климова/Gemini_Generated_Image_q2kl23q2kl23q2kl.jpg',
     'panov':     'Майор Панов/Gemini_Generated_Image_ipwgc2ipwgc2ipwg-Photoroom.png',
     'polkovnik': 'Александр Северов/Gemini_Generated_Image_hc6gtmhc6gtmhc6g.jpg',
